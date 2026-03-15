@@ -30,8 +30,6 @@
 {%- liquid
   assign bg_color = section.settings.background_color | default: '#F2E9DE'
   assign border_color = section.settings.border_color | default: '#000000'
-  assign left_menu = section.settings.left_menu
-  assign right_menu = section.settings.right_menu
 
   assign has_social_icons = true
   if settings.social_facebook_link == blank and settings.social_instagram_link == blank and settings.social_youtube_link == blank and settings.social_tiktok_link == blank and settings.social_twitter_link == blank and settings.social_pinterest_link == blank and settings.social_snapchat_link == blank and settings.social_tumblr_link == blank and settings.social_vimeo_link == blank
@@ -41,10 +39,10 @@
 
 <footer class="kimao-footer section-{{ section.id }}-padding" style="background-color: {{ bg_color }}; --kimao-border-color: {{ border_color }};">
 
-  {%- comment -%} ===== TOP: 2 Column Menu Area ===== {%- endcomment -%}
+  {%- comment -%} ===== TOP: 3 Column Menu Area ===== {%- endcomment -%}
   <div class="kimao-footer__columns">
 
-    {%- comment -%} Left Column {%- endcomment -%}
+    {%- comment -%} Left Column — Info {%- endcomment -%}
     <div class="kimao-footer__column kimao-footer__column--left">
       <div class="kimao-footer__heading" onclick="kimaoFooterAccordion(this)">
         <h2 class="kimao-footer__title">{{ section.settings.left_heading | default: 'Info' }}</h2>
@@ -59,7 +57,7 @@
       </ul>
     </div>
 
-    {%- comment -%} Right Column {%- endcomment -%}
+    {%- comment -%} Middle Column — Mağaza {%- endcomment -%}
     <div class="kimao-footer__column kimao-footer__column--right">
       <div class="kimao-footer__heading" onclick="kimaoFooterAccordion(this)">
         <h2 class="kimao-footer__title">{{ section.settings.right_heading | default: 'Mağaza' }}</h2>
@@ -73,11 +71,73 @@
       </ul>
     </div>
 
+    {%- comment -%} Right Column — Medya {%- endcomment -%}
+    <div class="kimao-footer__column kimao-footer__column--media">
+
+      {%- comment -%} Content: heading + social links {%- endcomment -%}
+      <div class="ki-media-content">
+        <div class="kimao-footer__heading" onclick="kimaoFooterAccordion(this)">
+          <h2 class="kimao-footer__title">{{ section.settings.media_heading | default: 'Medya' }}</h2>
+          <span class="kimao-footer__accordion-arrow">+</span>
+        </div>
+        {%- if section.settings.show_social and has_social_icons -%}
+          <ul class="kimao-footer__links ki-social-links">
+            {%- if settings.social_instagram_link != blank -%}
+              <li>
+                <a href="{{ settings.social_instagram_link }}" class="kimao-footer__link ki-social-link" target="_blank" rel="noopener noreferrer">
+                  <span class="svg-wrapper ki-social-icon">{{- 'icon-instagram.svg' | inline_asset_content -}}</span>
+                  <span>Instagram</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_youtube_link != blank -%}
+              <li>
+                <a href="{{ settings.social_youtube_link }}" class="kimao-footer__link ki-social-link" target="_blank" rel="noopener noreferrer">
+                  <span class="svg-wrapper ki-social-icon">{{- 'icon-youtube.svg' | inline_asset_content -}}</span>
+                  <span>YouTube</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_facebook_link != blank -%}
+              <li>
+                <a href="{{ settings.social_facebook_link }}" class="kimao-footer__link ki-social-link" target="_blank" rel="noopener noreferrer">
+                  <span class="svg-wrapper ki-social-icon">{{- 'icon-facebook.svg' | inline_asset_content -}}</span>
+                  <span>Facebook</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_tiktok_link != blank -%}
+              <li>
+                <a href="{{ settings.social_tiktok_link }}" class="kimao-footer__link ki-social-link" target="_blank" rel="noopener noreferrer">
+                  <span class="svg-wrapper ki-social-icon">{{- 'icon-tiktok.svg' | inline_asset_content -}}</span>
+                  <span>TikTok</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_pinterest_link != blank -%}
+              <li>
+                <a href="{{ settings.social_pinterest_link }}" class="kimao-footer__link ki-social-link" target="_blank" rel="noopener noreferrer">
+                  <span class="svg-wrapper ki-social-icon">{{- 'icon-pinterest.svg' | inline_asset_content -}}</span>
+                  <span>Pinterest</span>
+                </a>
+              </li>
+            {%- endif -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Credits: vertical text — desktop only {%- endcomment -%}
+      <div class="ki-media-credits">
+        <span class="ki-credits-text">SITE CREDITS</span>
+        <span class="ki-credits-text">©{{ 'now' | date: '%Y' }} KIMAO</span>
+      </div>
+
+    </div>
+
   </div>
 
-  {%- comment -%} ===== BOTTOM: Optional Extras ===== {%- endcomment -%}
-
-  {%- if section.settings.newsletter_enable or section.settings.enable_follow_on_shop or section.settings.show_social and has_social_icons -%}
+  {%- comment -%} ===== Newsletter / Follow on Shop ===== {%- endcomment -%}
+  {%- if section.settings.newsletter_enable or section.settings.enable_follow_on_shop -%}
     <div class="kimao-footer__extras section-{{ section.id }}-padding">
       {%- if section.settings.newsletter_enable -%}
         <div class="kimao-footer__newsletter">
@@ -125,24 +185,15 @@
               </div>
               {%- if form.errors -%}
                 <small class="newsletter-form__message form__message" id="ContactFooter-error">
-                  <span class="svg-wrapper">
-                    {{- 'icon-error.svg' | inline_asset_content -}}
-                  </span>
+                  <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
                   {{- form.errors.translated_fields.email | capitalize }}
                   {{ form.errors.messages.email -}}
                 </small>
               {%- endif -%}
             </div>
             {%- if form.posted_successfully? -%}
-              <h3
-                class="newsletter-form__message newsletter-form__message--success form__message"
-                id="ContactFooter-success"
-                tabindex="-1"
-                autofocus
-              >
-                <span class="svg-wrapper">
-                  {{- 'icon-success.svg' | inline_asset_content -}}
-                </span>
+              <h3 class="newsletter-form__message newsletter-form__message--success form__message" id="ContactFooter-success" tabindex="-1" autofocus>
+                <span class="svg-wrapper">{{- 'icon-success.svg' | inline_asset_content -}}</span>
                 {{- 'newsletter.success' | t }}
               </h3>
             {%- endif -%}
@@ -155,73 +206,43 @@
           {{ shop | login_button: action: 'follow' }}
         </div>
       {%- endif -%}
-
-      {%- if section.settings.show_social and has_social_icons -%}
-        {%- render 'social-icons', class: 'footer__list-social' -%}
-      {%- endif -%}
     </div>
   {%- endif -%}
 
-  <div class="kimao-footer__bottom">
-    <div class="kimao-footer__bottom-wrapper">
-      <div class="footer__localization isolate">
-        {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
-          <localization-form>
-            {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="caption-large text-body" id="FooterCountryLabel">{{ 'localization.country_label' | t }}</h2>
-                {%- render 'country-localization', localPosition: 'FooterCountry' -%}
-              </div>
-            {%- endform -%}
-          </localization-form>
+  {%- comment -%} ===== Mobile Bottom: Social Icons + Credits ===== {%- endcomment -%}
+  <div class="ki-mobile-bottom">
+    {%- if section.settings.show_social and has_social_icons -%}
+      <div class="ki-mobile-social">
+        {%- if settings.social_instagram_link != blank -%}
+          <a href="{{ settings.social_instagram_link }}" class="ki-mobile-social__link" target="_blank" rel="noopener noreferrer">
+            <span class="svg-wrapper">{{- 'icon-instagram.svg' | inline_asset_content -}}</span>
+          </a>
         {%- endif -%}
-
-        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-          <localization-form>
-            {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="caption-large text-body" id="FooterLanguageLabel">
-                  {{ 'localization.language_label' | t }}
-                </h2>
-                {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
-              </div>
-            {%- endform -%}
-          </localization-form>
+        {%- if settings.social_youtube_link != blank -%}
+          <a href="{{ settings.social_youtube_link }}" class="ki-mobile-social__link" target="_blank" rel="noopener noreferrer">
+            <span class="svg-wrapper">{{- 'icon-youtube.svg' | inline_asset_content -}}</span>
+          </a>
+        {%- endif -%}
+        {%- if settings.social_facebook_link != blank -%}
+          <a href="{{ settings.social_facebook_link }}" class="ki-mobile-social__link" target="_blank" rel="noopener noreferrer">
+            <span class="svg-wrapper">{{- 'icon-facebook.svg' | inline_asset_content -}}</span>
+          </a>
+        {%- endif -%}
+        {%- if settings.social_tiktok_link != blank -%}
+          <a href="{{ settings.social_tiktok_link }}" class="ki-mobile-social__link" target="_blank" rel="noopener noreferrer">
+            <span class="svg-wrapper">{{- 'icon-tiktok.svg' | inline_asset_content -}}</span>
+          </a>
+        {%- endif -%}
+        {%- if settings.social_pinterest_link != blank -%}
+          <a href="{{ settings.social_pinterest_link }}" class="ki-mobile-social__link" target="_blank" rel="noopener noreferrer">
+            <span class="svg-wrapper">{{- 'icon-pinterest.svg' | inline_asset_content -}}</span>
+          </a>
         {%- endif -%}
       </div>
-
-      {%- if section.settings.payment_enable -%}
-        <div class="footer__payment">
-          <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
-          <ul class="list list-payment" role="list">
-            {%- for type in shop.enabled_payment_types -%}
-              <li class="list-payment__item">
-                {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-              </li>
-            {%- endfor -%}
-          </ul>
-        </div>
-      {%- endif -%}
-    </div>
-
-    <div class="kimao-footer__copyright">
-      <small class="copyright__content"
-        >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
-      </small>
-      <small class="copyright__content">{{ powered_by_link }}</small>
-      {%- if section.settings.show_policy -%}
-        <ul class="policies list-unstyled">
-          {%- for policy in shop.policies -%}
-            {%- if policy != blank -%}
-              <li>
-                <small class="copyright__content"
-                  ><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small
-                >
-              </li>
-            {%- endif -%}
-          {%- endfor -%}
-        </ul>
-      {%- endif -%}
+    {%- endif -%}
+    <div class="ki-mobile-credits">
+      <span>SITE CREDITS</span>
+      <span>©{{ 'now' | date: '%Y' }} KIMAO</span>
     </div>
   </div>
 
@@ -262,19 +283,36 @@
     },
     {
       "type": "header",
-      "content": "Right Column"
+      "content": "Middle Column"
     },
     {
       "type": "text",
       "id": "right_heading",
-      "label": "Right Heading",
+      "label": "Middle Heading",
       "default": "Mağaza"
     },
     {
       "type": "link_list",
       "id": "right_menu",
-      "label": "Right Menu",
+      "label": "Middle Menu",
       "default": "footer"
+    },
+    {
+      "type": "header",
+      "content": "Media Column"
+    },
+    {
+      "type": "text",
+      "id": "media_heading",
+      "label": "Media Heading",
+      "default": "Medya"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "default": false,
+      "label": "t:sections.footer.settings.show_social.label",
+      "info": "t:sections.footer.settings.show_social.info"
     },
     {
       "type": "header",
@@ -322,13 +360,6 @@
     },
     {
       "type": "checkbox",
-      "id": "show_social",
-      "default": false,
-      "label": "t:sections.footer.settings.show_social.label",
-      "info": "t:sections.footer.settings.show_social.info"
-    },
-    {
-      "type": "checkbox",
       "id": "enable_country_selector",
       "default": false,
       "label": "t:sections.footer.settings.enable_country_selector.label",
@@ -340,19 +371,6 @@
       "default": false,
       "label": "t:sections.footer.settings.enable_language_selector.label",
       "info": "t:sections.footer.settings.enable_language_selector.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "payment_enable",
-      "default": false,
-      "label": "t:sections.footer.settings.payment_enable.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_policy",
-      "default": false,
-      "label": "t:sections.footer.settings.show_policy.label",
-      "info": "t:sections.footer.settings.show_policy.info"
     },
     {
       "type": "header",

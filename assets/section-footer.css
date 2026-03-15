@@ -8,7 +8,7 @@
   font-family: 'Sofia Pro', sans-serif;
 }
 
-/* ---------- TOP: Two Column Menu ---------- */
+/* ---------- TOP: Three Column Menu ---------- */
 
 .kimao-footer__columns {
   display: flex;
@@ -19,7 +19,7 @@
 }
 
 .kimao-footer__column {
-  width: 50%;
+  width: 33.333%;
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -28,6 +28,64 @@
 
 .kimao-footer__column--right {
   border-left: 1px solid var(--kimao-border-color, #000);
+}
+
+/* Media column: flex-row to place credits on the right */
+.kimao-footer__column--media {
+  border-left: 1px solid var(--kimao-border-color, #000);
+  flex-direction: row;
+  padding: 0;
+}
+
+.ki-media-content {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Vertical credits strip */
+.ki-media-credits {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 36px;
+  padding: 40px 14px 40px 0;
+}
+
+.ki-credits-text {
+  writing-mode: vertical-rl;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--kimao-border-color, #000);
+  white-space: nowrap;
+  font-family: 'Sofia Pro', sans-serif;
+}
+
+/* Social links: icon + text vertical list */
+.ki-social-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ki-social-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ki-social-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Mobile bottom (hidden on desktop) */
+.ki-mobile-bottom {
+  display: none;
 }
 
 .kimao-footer__heading {
@@ -215,8 +273,61 @@
     border-bottom: 1px solid var(--kimao-border-color, #000);
   }
 
-  .kimao-footer__column--right {
+  .kimao-footer__column--right,
+  .kimao-footer__column--media {
     border-left: none;
+  }
+
+  /* Media column: back to block on mobile */
+  .kimao-footer__column--media {
+    flex-direction: column;
+  }
+
+  .ki-media-content {
+    display: block;
+    padding: 0;
+  }
+
+  /* Hide desktop vertical credits on mobile */
+  .ki-media-credits {
+    display: none;
+  }
+
+  /* Mobile bottom: social row + credits bar */
+  .ki-mobile-bottom {
+    display: block;
+  }
+
+  .ki-mobile-social {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+    border-bottom: 1px solid var(--kimao-border-color, #000);
+  }
+
+  .ki-mobile-social__link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--kimao-border-color, #000);
+  }
+
+  .ki-mobile-social__link svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .ki-mobile-credits {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    font-size: 11px;
+    font-family: 'Sofia Pro', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--kimao-border-color, #000);
   }
 
   .kimao-footer__heading {
