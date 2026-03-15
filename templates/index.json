@@ -1,0 +1,105 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "Browse our latest products",
+            "heading_size": "h0"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/banner.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "infinite_slider": {
+      "type": "infinite-collection-slider",
+      "settings": {
+        "collection": "all",
+        "products_to_show": 12,
+        "side_text": "KIMAŌ ÖNERİYOR",
+        "wide_image": "shopify://shop_images/b774267ab6577acfc4233b5e6a138d2c616e8a1d-1524x1214.avif",
+        "wide_text": "",
+        "wide_slide_width": 600,
+        "card_width": 400,
+        "slider_height": 600,
+        "card_color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "infinite_collection_slider_HX7TRg": {
+      "type": "infinite-collection-slider",
+      "settings": {
+        "collection": "set-bundle",
+        "products_to_show": 12,
+        "side_text": "SET/BUNDLE",
+        "wide_image": "shopify://shop_images/Jerusalem_The_Emanation_of_The_Giant_Albion__object_37_detail.jpg",
+        "wide_text": "",
+        "wide_slide_width": 600,
+        "card_width": 400,
+        "slider_height": 600,
+        "card_color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "kimao_girl_animation_ktjNxN": {
+      "type": "kimao-girl-animation",
+      "name": "Kimao Girl Animation",
+      "settings": {
+        "section_height": 80,
+        "bg_image": "shopify://shop_images/hf_20260213_152842_c76f87cf-90c5-4aa5-95d0-8557be531457_1.png",
+        "overlay_opacity": 0,
+        "font_size": 150,
+        "font_size_mobile": 60,
+        "anim_speed": 3
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "infinite_slider",
+    "infinite_collection_slider_HX7TRg",
+    "kimao_girl_animation_ktjNxN"
+  ]
+}

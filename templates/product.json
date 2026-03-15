@@ -1,0 +1,93 @@
+{
+  "sections": {
+    "kimao-product-detail-top": {
+      "type": "kimao-product-detail-top",
+      "blocks": {
+        "block-ph": {
+          "type": "info_block",
+          "settings": {
+            "title": "pH Değeri",
+            "description": "",
+            "title_size": 12,
+            "title_weight": "600",
+            "desc_size": 13,
+            "desc_weight": "400"
+          }
+        },
+        "block-skin": {
+          "type": "info_block",
+          "settings": {
+            "title": "Cilt Tipi",
+            "description": "",
+            "title_size": 12,
+            "title_weight": "600",
+            "desc_size": 13,
+            "desc_weight": "400"
+          }
+        },
+        "block-volume": {
+          "type": "info_block",
+          "settings": {
+            "title": "Hacim",
+            "description": "",
+            "title_size": 12,
+            "title_weight": "600",
+            "desc_size": 13,
+            "desc_weight": "400"
+          }
+        },
+        "block-texture": {
+          "type": "info_block",
+          "settings": {
+            "title": "Doku",
+            "description": "",
+            "title_size": 12,
+            "title_weight": "600",
+            "desc_size": 13,
+            "desc_weight": "400"
+          }
+        }
+      },
+      "block_order": [
+        "block-ph",
+        "block-skin",
+        "block-volume",
+        "block-texture"
+      ],
+      "settings": {
+        "left_width": 4,
+        "middle_width": 3,
+        "right_width": 3,
+        "padding": 24,
+        "category_size": 11,
+        "category_weight": "500",
+        "title_size": 28,
+        "title_weight": "600",
+        "desc_size": 14,
+        "desc_weight": "400"
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Bunları da beğenebilirsin",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "kimao-product-detail-top",
+    "related-products"
+  ]
+}

@@ -1,0 +1,292 @@
+{%- assign ingredients_text = product.metafields.custom.ingredients -%}
+
+<style>
+  .kimao-formulasyon-{{ section.id }} {
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    border-top: 1px solid rgb(var(--color-foreground));
+    border-bottom: 1px solid rgb(var(--color-foreground));
+  }
+
+  .kimao-formulasyon-{{ section.id }} .kf-inner {
+    position: relative;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  @media (max-width: 749px) {
+    .kimao-formulasyon-{{ section.id }} .kf-inner {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+  }
+
+  /* SVG Panel */
+  .kimao-formulasyon-{{ section.id }} .kf-svg-panel {
+    display: block;
+    width: 100%;
+    color: rgb(var(--color-foreground));
+    /* hover-out: SVG geri dönerken text çıktıktan sonra başlar */
+    transition: transform 700ms cubic-bezier(0.76, 0, 0.24, 1) 120ms;
+  }
+
+  .kimao-formulasyon-{{ section.id }} .kf-svg-panel svg {
+    display: block;
+    width: 100%;
+  }
+
+  .kimao-formulasyon-{{ section.id }}.is-hovered .kf-svg-panel {
+    transform: translateX(-110%);
+    /* hover-in: SVG hemen harekete geçer */
+    transition: transform 700ms cubic-bezier(0.76, 0, 0.24, 1) 0ms;
+  }
+
+  /* Text Panel */
+  .kimao-formulasyon-{{ section.id }} .kf-text-panel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: {{ section.settings.text_padding_top }}px {{ section.settings.text_padding_x }}px {{ section.settings.text_padding_bottom }}px;
+    transform: translateX(100%);
+    /* hover-out: text hemen çıkmaya başlar */
+    transition: transform 700ms cubic-bezier(0.76, 0, 0.24, 1) 0ms;
+    pointer-events: none;
+  }
+
+  .kimao-formulasyon-{{ section.id }}.is-hovered .kf-text-panel {
+    transform: translateX(0);
+    /* hover-in: SVG çıktıktan sonra text girer */
+    transition: transform 700ms cubic-bezier(0.76, 0, 0.24, 1) 150ms;
+    pointer-events: auto;
+  }
+
+  .kimao-formulasyon-{{ section.id }} .kf-ingredients {
+    color: rgb(var(--color-foreground));
+    font-size: clamp({{ section.settings.text_font_size | times: 0.8 | round }}px, {{ section.settings.text_font_size | divided_by: 14.4 }}vw, {{ section.settings.text_font_size | times: 1.25 | round }}px);
+    line-height: 1.65;
+    max-width: 50%;
+    margin: 0;
+  }
+
+  /* Mobile */
+  @media (max-width: 749px) {
+    .kimao-formulasyon-{{ section.id }} .kf-svg-panel {
+      transition: none;
+      transform: none !important;
+    }
+
+    .kimao-formulasyon-{{ section.id }} .kf-text-panel {
+      position: static;
+      transform: none !important;
+      transition: none;
+      pointer-events: auto;
+      padding: {{ section.settings.mobile_gap }}px {{ section.settings.text_padding_x }}px {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    .kimao-formulasyon-{{ section.id }} .kf-ingredients {
+      max-width: 100%;
+      font-size: clamp({{ section.settings.mobile_text_font_size | times: 0.85 | round }}px, {{ section.settings.mobile_text_font_size | divided_by: 3.75 }}vw, {{ section.settings.mobile_text_font_size }}px);
+    }
+  }
+</style>
+
+{%- if ingredients_text != blank or request.design_mode -%}
+
+<div class="kimao-formulasyon-{{ section.id }} color-{{ section.settings.color_scheme }}">
+  <div class="kf-inner">
+
+    <div class="kf-svg-panel">
+      <svg width="100%" viewBox="0 0 1200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <text x="600" y="105" text-anchor="middle" dominant-baseline="central" font-family="'Inter', 'Helvetica Neue', 'Arial Black', sans-serif" font-size="{{ section.settings.svg_font_size }}" font-weight="900" letter-spacing="0.04em" fill="currentColor">FORMULASYON</text>
+      </svg>
+    </div>
+
+    <div class="kf-text-panel">
+      <p class="kf-ingredients">
+        {%- if ingredients_text != blank -%}
+          {{ ingredients_text }}
+        {%- else -%}
+          Ürüne custom.ingredients metafield verisi ekleyin.
+        {%- endif -%}
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  function init(section) {
+    if (!section) return;
+    section.addEventListener('mouseenter', function() {
+      section.classList.add('is-hovered');
+    });
+    section.addEventListener('mouseleave', function() {
+      section.classList.remove('is-hovered');
+    });
+  }
+
+  var el = document.querySelector('.kimao-formulasyon-{{ section.id }}');
+  if (el) init(el);
+
+  document.addEventListener('shopify:section:load', function(e) {
+    if (e.detail.sectionId === '{{ section.id }}') {
+      init(e.target.querySelector('.kimao-formulasyon-{{ section.id }}'));
+    }
+  });
+})();
+</script>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Kimao Formulasyon",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Font sizes"
+    },
+    {
+      "type": "range",
+      "id": "svg_font_size",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "label": "Heading font size",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients font size",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients font size (mobile)",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Heading padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Heading top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Heading bottom padding",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Text padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "text_padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Text top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "text_padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Text bottom padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "text_padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Text horizontal padding",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Mobile padding"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Heading top padding (mobile)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Heading bottom padding (mobile)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between heading and text (mobile)",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kimao Formulasyon"
+    }
+  ]
+}
+{% endschema %}

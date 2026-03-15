@@ -1,0 +1,294 @@
+/* ============================================
+   KIMAO FOOTER — Brutalist 2-Column Layout
+   ============================================ */
+
+.kimao-footer {
+  width: 100%;
+  color: var(--kimao-border-color, #000);
+  font-family: 'Sofia Pro', sans-serif;
+}
+
+/* ---------- TOP: Two Column Menu ---------- */
+
+.kimao-footer__columns {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid var(--kimao-border-color, #000);
+  border-bottom: 1px solid var(--kimao-border-color, #000);
+  min-height: 350px;
+}
+
+.kimao-footer__column {
+  width: 50%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.kimao-footer__column--right {
+  border-left: 1px solid var(--kimao-border-color, #000);
+}
+
+.kimao-footer__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.kimao-footer__title {
+  font-family: 'Sofia Pro', 'Helvetica Neue LT Std', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 60px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 55px;
+  margin: 0;
+  text-transform: none;
+  color: rgb(0, 0, 0);
+}
+
+.kimao-footer__accordion-arrow {
+  display: none;
+}
+
+.kimao-footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.kimao-footer__links li {
+  margin: 0;
+  padding: 10px 0;
+}
+
+.kimao-footer__link {
+  font-family: 'Sofia Pro', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--kimao-border-color, #000);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.kimao-footer__link:hover {
+  opacity: 0.6;
+}
+
+.kimao-footer__link--active {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+/* ---------- EXTRAS: Newsletter / Social / Follow ---------- */
+
+.kimao-footer__extras {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem 40px;
+  border-bottom: 1px solid var(--kimao-border-color, #000);
+}
+
+.kimao-footer__newsletter {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.footer__follow-on-shop {
+  display: flex;
+  text-align: center;
+}
+
+.footer__list-social.list-social {
+  justify-content: center;
+}
+
+/* ---------- BOTTOM: Copyright / Payment / Localization ---------- */
+
+.kimao-footer__bottom {
+  padding: 2rem 40px;
+}
+
+.kimao-footer__bottom-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footer__localization {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.footer__localization:empty {
+  display: none;
+}
+
+.footer__localization h2 {
+  margin: 0 0 0.5rem;
+  color: var(--kimao-border-color, #000);
+  opacity: 0.75;
+}
+
+.footer__payment {
+  margin: 0;
+}
+
+.kimao-footer__copyright {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.copyright__content {
+  font-size: 1.1rem;
+  color: var(--kimao-border-color, #000);
+}
+
+.copyright__content a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+.copyright__content a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+.policies {
+  display: inline;
+}
+
+.policies li {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.policies li::before {
+  content: '\00B7';
+  padding: 0 0.8rem;
+}
+
+.policies li a {
+  padding: 0.6rem 0;
+  display: block;
+  color: var(--kimao-border-color, #000);
+  text-decoration: none;
+}
+
+.policies li a:hover {
+  text-decoration: underline;
+}
+
+/* Newsletter form field */
+.newsletter-form__field-wrapper {
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+/* ============================================
+   MOBILE — Accordion (max-width: 1000px)
+   ============================================ */
+
+@media screen and (max-width: 1000px) {
+  .kimao-footer__columns {
+    display: block;
+    min-height: auto;
+    border-bottom: none;
+  }
+
+  .kimao-footer__column {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border-bottom: 1px solid var(--kimao-border-color, #000);
+  }
+
+  .kimao-footer__column--right {
+    border-left: none;
+  }
+
+  .kimao-footer__heading {
+    padding: 20px 24px;
+    margin-bottom: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .kimao-footer__title {
+    font-size: 32px;
+  }
+
+  .kimao-footer__accordion-arrow {
+    display: block;
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--kimao-border-color, #000);
+    user-select: none;
+  }
+
+  .kimao-footer__links {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 24px;
+  }
+
+  .kimao-footer__links.open {
+    max-height: 500px;
+    padding: 0 24px 0;
+  }
+
+  .kimao-footer__link {
+    font-size: 16px;
+    display: block;
+    padding: 10px 24px;
+    margin: -10px -24px;
+  }
+
+  .kimao-footer__links li {
+    padding: 10px 0;
+    margin-left: -24px;
+    margin-right: -24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-bottom: 1px solid var(--kimao-border-color, #000);
+  }
+
+  .kimao-footer__links li:first-child {
+    border-top: 1px solid var(--kimao-border-color, #000);
+  }
+
+  /* Extras */
+  .kimao-footer__extras {
+    flex-direction: column;
+    padding: 2rem 24px;
+  }
+
+  /* Bottom */
+  .kimao-footer__bottom {
+    padding: 2rem 24px;
+  }
+
+  .kimao-footer__bottom-wrapper {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer__localization {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,163 @@
+<style>
+  .collection-grid-{{ section.id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border: 1px solid #000;
+    overflow: hidden;
+  }
+
+  .collection-grid-{{ section.id }} .cg-cell {
+    position: relative;
+    border: 1px solid #000;
+    margin-left: -1px;
+    margin-top: -1px;
+    overflow: hidden;
+  }
+
+  .collection-grid-{{ section.id }} .cg-cell::before {
+    content: '';
+    display: block;
+    padding-bottom: 133%;
+  }
+
+  .collection-grid-{{ section.id }} .cg-cell img,
+  .collection-grid-{{ section.id }} .cg-cell svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .collection-grid-{{ section.id }} .cg-cell--image {
+    pointer-events: none;
+  }
+
+  .collection-grid-{{ section.id }} .cg-cell--product a {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  .collection-grid-{{ section.id }} .cg-cell--product a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .collection-grid-{{ section.id }} .placeholder-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #f2e9de;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-grid-{{ section.id }} {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+
+{%- liquid
+  assign collection = section.settings.collection
+  assign products_limit = section.settings.products_to_show
+-%}
+
+<div class="collection-grid-{{ section.id }} color-{{ section.settings.color_scheme }}">
+  {%- comment -%} Grid 1: Decorative image {%- endcomment -%}
+  <div class="cg-cell cg-cell--image">
+    {%- if section.settings.grid_image != blank -%}
+      <img
+        src="{{ section.settings.grid_image | image_url: width: 600 }}"
+        srcset="{{ section.settings.grid_image | image_url: width: 300 }} 300w,
+                {{ section.settings.grid_image | image_url: width: 450 }} 450w,
+                {{ section.settings.grid_image | image_url: width: 600 }} 600w"
+        sizes="(max-width: 749px) 50vw, 33vw"
+        alt="{{ section.settings.grid_image.alt | escape }}"
+        width="{{ section.settings.grid_image.width }}"
+        height="{{ section.settings.grid_image.height }}"
+        loading="lazy"
+      >
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Grid 2+: Product cells {%- endcomment -%}
+  {%- if collection != blank and collection.products.size > 0 -%}
+    {%- for product in collection.products limit: products_limit -%}
+      <div class="cg-cell cg-cell--product">
+        <a href="{{ product.url }}">
+          {%- if product.featured_image != blank -%}
+            <img
+              src="{{ product.featured_image | image_url: width: 600 }}"
+              srcset="{{ product.featured_image | image_url: width: 300 }} 300w,
+                      {{ product.featured_image | image_url: width: 450 }} 450w,
+                      {{ product.featured_image | image_url: width: 600 }} 600w"
+              sizes="(max-width: 749px) 50vw, 33vw"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              width="{{ product.featured_image.width }}"
+              height="{{ product.featured_image.height }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </a>
+      </div>
+    {%- endfor -%}
+  {%- else -%}
+    {%- for i in (1..5) -%}
+      <div class="cg-cell cg-cell--product">
+        {{ 'product-apparel-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endfor -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collection Grid",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "grid_image",
+      "label": "Grid 1 image (decorative)"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 5,
+      "label": "Products to show"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Grid"
+    }
+  ]
+}
+{% endschema %}

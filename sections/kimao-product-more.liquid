@@ -1,0 +1,194 @@
+{% comment %}
+  kimao-product-more.liquid
+  vw tabanlı yükseklik + kırpma → tüm ekran oranlarında tutarlı.
+  Tüm değerler viewport genişliğine göre ölçeklenir.
+{% endcomment %}
+
+<style>
+  .kimao-product-more-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: {{ section.settings.height_vw }}vw;
+    overflow: hidden;
+    border-top: 1px solid {{ section.settings.border_color }};
+    border-bottom: 1px solid {{ section.settings.border_color }};
+  }
+
+  .kimao-product-more-{{ section.id }} img {
+    position: absolute;
+    width: calc(100% + {{ section.settings.crop_left }}vw + {{ section.settings.crop_right }}vw);
+    height: auto;
+    left: -{{ section.settings.crop_left }}vw;
+    top: -{{ section.settings.crop_top }}vw;
+  }
+
+  .kimao-product-more-{{ section.id }} .placeholder-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 749px) {
+    .kimao-product-more-{{ section.id }} {
+      height: {{ section.settings.mobile_height_vw }}vw;
+    }
+
+    .kimao-product-more-{{ section.id }} img {
+      width: calc(100% + {{ section.settings.mobile_crop_left }}vw + {{ section.settings.mobile_crop_right }}vw);
+      left: -{{ section.settings.mobile_crop_left }}vw;
+      top: -{{ section.settings.mobile_crop_top }}vw;
+    }
+  }
+</style>
+
+<div class="kimao-product-more-{{ section.id }} color-{{ section.settings.color_scheme }} gradient">
+  {%- if section.settings.image != blank -%}
+    <img
+      src="{{ section.settings.image | image_url: width: 2000 }}"
+      srcset="
+        {{ section.settings.image | image_url: width: 750 }} 750w,
+        {{ section.settings.image | image_url: width: 1100 }} 1100w,
+        {{ section.settings.image | image_url: width: 1500 }} 1500w,
+        {{ section.settings.image | image_url: width: 2000 }} 2000w
+      "
+      sizes="100vw"
+      alt="{{ section.settings.image.alt | escape }}"
+      width="{{ section.settings.image.width }}"
+      height="{{ section.settings.image.height }}"
+      loading="{{ section.settings.loading }}"
+    >
+  {%- else -%}
+    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Product More",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Renk şeması",
+      "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "SVG / Görsel"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Çizgi rengi",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "loading",
+      "label": "Yükleme",
+      "options": [
+        { "value": "lazy", "label": "Lazy (önerilen)" },
+        { "value": "eager", "label": "Eager (sayfa açılır açılmaz)" }
+      ],
+      "default": "lazy"
+    },
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
+      "type": "range",
+      "id": "height_vw",
+      "label": "Yükseklik (vw)",
+      "info": "Viewport genişliğinin yüzdesi — tüm ekranlarda orantılı kalır",
+      "min": 0,
+      "max": 50,
+      "step": 0.5,
+      "default": 15,
+      "unit": "vw"
+    },
+    {
+      "type": "range",
+      "id": "crop_top",
+      "label": "Üstten kırp (vw)",
+      "min": 0,
+      "max": 20,
+      "step": 0.2,
+      "default": 0,
+      "unit": "vw"
+    },
+    {
+      "type": "range",
+      "id": "crop_left",
+      "label": "Soldan kırp (vw)",
+      "min": 0,
+      "max": 20,
+      "step": 0.2,
+      "default": 0,
+      "unit": "vw"
+    },
+    {
+      "type": "range",
+      "id": "crop_right",
+      "label": "Sağdan kırp (vw)",
+      "min": 0,
+      "max": 20,
+      "step": 0.2,
+      "default": 0,
+      "unit": "vw"
+    },
+    {
+      "type": "header",
+      "content": "Mobil (max 749px)"
+    },
+    {
+      "type": "range",
+      "id": "mobile_height_vw",
+      "label": "Yükseklik (vw)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "vw"
+    },
+    {
+      "type": "range",
+      "id": "mobile_crop_top",
+      "label": "Üstten kırp (vw)",
+      "min": 0,
+      "max": 20,
+      "step": 0.2,
+      "default": 0,
+      "unit": "vw"
+    },
+    {
+      "type": "range",
+      "id": "mobile_crop_left",
+      "label": "Soldan kırp (vw)",
+      "min": 0,
+      "max": 20,
+      "step": 0.2,
+      "default": 0,
+      "unit": "vw"
+    },
+    {
+      "type": "range",
+      "id": "mobile_crop_right",
+      "label": "Sağdan kırp (vw)",
+      "min": 0,
+      "max": 20,
+      "step": 0.2,
+      "default": 0,
+      "unit": "vw"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product More"
+    }
+  ]
+}
+{% endschema %}

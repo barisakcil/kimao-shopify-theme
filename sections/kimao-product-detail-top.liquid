@@ -1,0 +1,1344 @@
+{% comment %}
+  kimao-product-detail-top.liquid
+  3-column product detail section:
+  - Left  : detail photos from custom.detay_fotolar metafield (normal flow, sets section height)
+  - Middle: product info + ATC (position: sticky inside full-height column)
+  - Right : configurable info blocks (position: sticky inside full-height column)
+{% endcomment %}
+
+{% assign detail_images = product.metafields.custom.detay_fotolar.value %}
+
+<style>
+  .kpdt-{{ section.id }} {
+    display: grid;
+    grid-template-columns:
+      {{ section.settings.left_width }}fr
+      {{ section.settings.middle_width }}fr
+      {{ section.settings.right_width }}fr;
+    align-items: stretch;
+    background-color: {{ section.settings.bg_color }};
+  }
+
+  /* ── COLUMN BORDERS ───────────────────────── */
+  .kpdt-{{ section.id }} .kpdt__middle-col {
+    border-left: 1px solid rgba(var(--color-foreground), var(--inputs-border-opacity));
+    border-right: 1px solid rgba(var(--color-foreground), var(--inputs-border-opacity));
+  }
+
+  /* ── LEFT ─────────────────────────────────── */
+  .kpdt-{{ section.id }} .kpdt__slider-track {
+    display: block; /* desktop: normal stacked flow */
+  }
+
+  .kpdt-{{ section.id }} .kpdt__photo + .kpdt__photo {
+    border-top: 1px solid rgba(var(--color-foreground), var(--inputs-border-opacity));
+  }
+
+  .kpdt-{{ section.id }} .kpdt__photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ── MIDDLE (sticky inner) ────────────────── */
+  .kpdt-{{ section.id }} .kpdt__middle-inner {
+    position: sticky;
+    top: var(--header-height, 0px);
+    padding: {{ section.settings.padding }}px;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__category {
+    font-size: clamp({{ section.settings.category_size | times: 0.75 | round }}px, {{ section.settings.category_size | divided_by: 14.4 }}vw, {{ section.settings.category_size | times: 1.4 | round }}px);
+    font-weight: {{ section.settings.category_weight }};
+    letter-spacing: {{ section.settings.category_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.category_line_height | divided_by: 10.0 }};
+    text-transform: {{ section.settings.category_transform }};
+    color: {{ section.settings.category_color }};
+    margin: 0 0 8px;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__title {
+    font-size: clamp({{ section.settings.title_size | times: 0.75 | round }}px, {{ section.settings.title_size | divided_by: 14.4 }}vw, {{ section.settings.title_size | times: 1.4 | round }}px);
+    font-weight: {{ section.settings.title_weight }};
+    letter-spacing: {{ section.settings.title_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.title_line_height | divided_by: 10.0 }};
+    text-transform: {{ section.settings.title_transform }};
+    color: {{ section.settings.title_color }};
+    margin: 0 0 28px;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__variants {
+    margin-bottom: 16px;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__option label {
+    display: block;
+    font-size: clamp(9px, 0.83vw, 17px);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+    opacity: 0.6;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__option select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid rgba(var(--color-foreground), var(--inputs-border-opacity));
+    background: transparent;
+    font-size: clamp(11px, 0.97vw, 20px);
+    margin-bottom: 12px;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__atc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: {{ section.settings.atc_padding_y }}px {{ section.settings.atc_padding_x }}px;
+    background: {{ section.settings.atc_bg_color }};
+    border: none;
+    border-radius: {{ section.settings.atc_radius | divided_by: 100.0 }}rem;
+    cursor: pointer;
+    margin-bottom: 28px;
+    transition: opacity 0.2s;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__atc:hover {
+    opacity: 0.85;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__atc[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__atc-label {
+    font-size: clamp({{ section.settings.atc_label_size | times: 0.75 | round }}px, {{ section.settings.atc_label_size | divided_by: 14.4 }}vw, {{ section.settings.atc_label_size | times: 1.4 | round }}px);
+    font-weight: {{ section.settings.atc_label_weight }};
+    letter-spacing: {{ section.settings.atc_label_letter_spacing | divided_by: 100.0 }}em;
+    text-transform: {{ section.settings.atc_label_transform }};
+    color: {{ section.settings.atc_label_color }};
+  }
+
+  .kpdt-{{ section.id }} .kpdt__price {
+    font-size: clamp({{ section.settings.atc_price_size | times: 0.75 | round }}px, {{ section.settings.atc_price_size | divided_by: 14.4 }}vw, {{ section.settings.atc_price_size | times: 1.4 | round }}px);
+    font-weight: {{ section.settings.atc_price_weight }};
+    letter-spacing: {{ section.settings.atc_price_letter_spacing | divided_by: 100.0 }}em;
+    color: {{ section.settings.atc_price_color }};
+  }
+
+  .kpdt-{{ section.id }} .kpdt__description {
+    font-size: clamp({{ section.settings.desc_size | times: 0.75 | round }}px, {{ section.settings.desc_size | divided_by: 14.4 }}vw, {{ section.settings.desc_size | times: 1.4 | round }}px);
+    font-weight: {{ section.settings.desc_weight }};
+    letter-spacing: {{ section.settings.desc_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.desc_line_height | divided_by: 10.0 }};
+    text-transform: {{ section.settings.desc_transform }};
+    color: {{ section.settings.desc_color }};
+  }
+
+  .kpdt-{{ section.id }} .kpdt__description p {
+    margin: 0 0 12px;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__description p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── ACCORDION ───────────────────────────── */
+  .kpdt-{{ section.id }} .kpdt__accordions {
+    margin-top: 28px;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-item {
+    border-top: 1px solid rgba(var(--color-foreground), var(--inputs-border-opacity));
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-item:last-child {
+    border-bottom: 1px solid rgba(var(--color-foreground), var(--inputs-border-opacity));
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: {{ section.settings.accordion_padding }}px 0;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-title {
+    font-size: clamp({{ section.settings.accordion_title_size | times: 0.75 | round }}px, {{ section.settings.accordion_title_size | divided_by: 14.4 }}vw, {{ section.settings.accordion_title_size | times: 1.4 | round }}px);
+    font-weight: {{ section.settings.accordion_title_weight }};
+    letter-spacing: {{ section.settings.accordion_title_letter_spacing | divided_by: 100.0 }}em;
+    text-transform: {{ section.settings.accordion_title_transform }};
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    transition: transform 350ms ease;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-item.is-open .kpdt__accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 350ms ease;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-item.is-open .kpdt__accordion-body {
+    grid-template-rows: 1fr;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-body-inner {
+    overflow: hidden;
+    padding-bottom: 0;
+    transition: padding-bottom 350ms ease;
+    font-size: clamp({{ section.settings.accordion_content_size | times: 0.75 | round }}px, {{ section.settings.accordion_content_size | divided_by: 14.4 }}vw, {{ section.settings.accordion_content_size | times: 1.4 | round }}px);
+    font-weight: {{ section.settings.accordion_content_weight }};
+    letter-spacing: {{ section.settings.accordion_content_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.accordion_content_line_height | divided_by: 10.0 }};
+    color: {{ section.settings.accordion_content_color }};
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-item.is-open .kpdt__accordion-body-inner {
+    padding-bottom: {{ section.settings.accordion_padding }}px;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-body-inner p {
+    margin: 0 0 8px;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__accordion-body-inner p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── RIGHT (sticky inner) ─────────────────── */
+  .kpdt-{{ section.id }} .kpdt__right-inner {
+    position: sticky;
+    top: var(--header-height, 0px);
+    padding: {{ section.settings.padding }}px;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__info-block {
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.1);
+  }
+
+  .kpdt-{{ section.id }} .kpdt__info-block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__info-title {
+    margin: 0 0 5px;
+  }
+
+  .kpdt-{{ section.id }} .kpdt__info-desc p {
+    margin: 0;
+  }
+
+  /* ── MOBILE ───────────────────────────────── */
+  @media (max-width: 749px) {
+    .kpdt-{{ section.id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .kpdt-{{ section.id }} .kpdt__middle-col {
+      border-left: none;
+      border-right: none;
+      border-top: 1px solid rgba(var(--color-foreground), var(--inputs-border-opacity));
+      border-bottom: none;
+    }
+
+    .kpdt-{{ section.id }} .kpdt__middle-inner,
+    .kpdt-{{ section.id }} .kpdt__right-inner {
+      position: static;
+      padding: 20px;
+      max-height: none;
+      overflow: visible;
+    }
+
+    .kpdt-{{ section.id }} .kpdt__right-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .kpdt-{{ section.id }} > .kpdt__accordions {
+      padding: 0 20px 20px;
+      margin-top: 0;
+    }
+
+    .kpdt-{{ section.id }} .kpdt__info-block {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+
+
+    /* ── MOBILE SLIDER ── */
+
+    /* left-col becomes the positioning parent */
+    .kpdt-{{ section.id }} .kpdt__left-col {
+      position: relative;
+    }
+
+    /* track = actual scrollable strip */
+    .kpdt-{{ section.id }} .kpdt__slider-track {
+      display: flex;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .kpdt-{{ section.id }} .kpdt__slider-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .kpdt-{{ section.id }} .kpdt__photo {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      border-top: none;
+    }
+
+    .kpdt-{{ section.id }} .kpdt__photo + .kpdt__photo {
+      border-top: none;
+      border-left: none;
+    }
+
+    /* Indicators — sibling to track, NOT inside it */
+    .kpdt-{{ section.id }} .kpdt__slider-indicators {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .kpdt-{{ section.id }} .kpdt__indicator {
+      display: block;
+      height: 2px;
+      width: 24px;
+      background: rgba(var(--color-foreground), 0.25);
+      transition: width 0.25s, background 0.25s;
+      border-radius: 1px;
+    }
+
+    .kpdt-{{ section.id }} .kpdt__indicator.is-active {
+      width: 32px;
+      background: rgb(var(--color-foreground));
+    }
+
+    /* Next button — sibling to track, NOT inside it */
+    .kpdt-{{ section.id }} .kpdt__slider-next {
+      display: flex;
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      background: rgba(242, 233, 222, 0.9);
+      border: 1px solid #000;
+      border-radius: 0;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .kpdt-{{ section.id }} .kpdt__slider-next svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  /* Hide slider UI on desktop */
+  @media (min-width: 750px) {
+    .kpdt-{{ section.id }} .kpdt__slider-indicators,
+    .kpdt-{{ section.id }} .kpdt__slider-next {
+      display: none !important;
+    }
+  }
+</style>
+
+<div class="kpdt-{{ section.id }}">
+
+  {%- comment -%} ── LEFT: Photos ── {%- endcomment -%}
+  <div class="kpdt__left-col">
+
+    {%- comment -%} Track = scrollable strip on mobile, normal block on desktop {%- endcomment -%}
+    <div class="kpdt__slider-track">
+      {% if detail_images != blank %}
+        {% for image in detail_images %}
+          <div class="kpdt__photo">
+            <img
+              src="{{ image | image_url: width: 1400 }}"
+              alt="{{ product.title }}"
+              width="1400"
+              height="{{ 1400 | divided_by: image.aspect_ratio | round }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            >
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="kpdt__photo">
+          {{ 'product-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    </div>
+
+    {%- comment -%} Indicators + button: siblings to track, stay fixed during scroll {%- endcomment -%}
+    {% if detail_images.size > 1 %}
+      <div class="kpdt__slider-indicators">
+        {% for i in (1..detail_images.size) %}
+          <span class="kpdt__indicator{% if forloop.first %} is-active{% endif %}"></span>
+        {% endfor %}
+      </div>
+
+      <button class="kpdt__slider-next" aria-label="Sonraki fotoğraf">
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </button>
+    {% endif %}
+
+  </div>
+
+  {%- comment -%} ── MIDDLE: Product info + ATC ── {%- endcomment -%}
+  <div class="kpdt__middle-col">
+    <div class="kpdt__middle-inner">
+
+      {% if product.type != blank %}
+        <p class="kpdt__category">{{ product.type }}</p>
+      {% endif %}
+
+      <h1 class="kpdt__title">{{ product.title }}</h1>
+
+      {% form 'product', product %}
+        {% if product.has_only_default_variant == false %}
+          <div class="kpdt__variants">
+            {% for option in product.options_with_values %}
+              <div class="kpdt__option">
+                <label for="kpdt-option-{{ section.id }}-{{ forloop.index }}">{{ option.name }}</label>
+                <select id="kpdt-option-{{ section.id }}-{{ forloop.index }}" name="id">
+                  {% for variant in product.variants %}
+                    <option
+                      value="{{ variant.id }}"
+                      {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                      {% unless variant.available %}disabled{% endunless %}
+                    >
+                      {{ variant.title }} — {{ variant.price | money }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        {% endif %}
+
+        <button
+          type="submit"
+          name="add"
+          class="kpdt__atc"
+          {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+        >
+          <span class="kpdt__atc-label">
+            {%- if product.selected_or_first_available_variant.available -%}
+              Sepete Ekle
+            {%- else -%}
+              Tükendi
+            {%- endif -%}
+          </span>
+          <span class="kpdt__price">{{ product.selected_or_first_available_variant.price | money }}</span>
+        </button>
+      {% endform %}
+
+      <script>
+        (function() {
+          var form = document.querySelector('.kpdt-{{ section.id }} form[action="/cart/add"]');
+          if (!form) return;
+
+          form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            var btn = form.querySelector('[name="add"]');
+            if (btn && btn.disabled) return;
+            if (btn) btn.disabled = true;
+
+            try {
+              var formData = new FormData(form);
+              formData.append('sections', 'cart-drawer,cart-icon-bubble');
+              formData.append('sections_url', window.location.pathname);
+
+              var res = await fetch('/cart/add.js', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                body: formData
+              });
+
+              if (!res.ok) throw new Error('add failed');
+
+              var data = await res.json();
+
+              var drawer = document.querySelector('cart-drawer');
+              if (drawer && drawer.renderContents) {
+                drawer.renderContents(data);
+                drawer.classList.remove('is-empty');
+              } else if (drawer && drawer.open) {
+                drawer.open();
+              }
+            } catch(err) {
+              console.error('KPDT ATC error:', err);
+              form.submit();
+            } finally {
+              if (btn) btn.disabled = false;
+            }
+          });
+        })();
+      </script>
+
+      {% if product.description != blank %}
+        <div class="kpdt__description">{{ product.description }}</div>
+      {% endif %}
+
+      {%- assign accordion_blocks = section.blocks | where: 'type', 'accordion_item' -%}
+      {%- if accordion_blocks.size > 0 -%}
+        <div class="kpdt__accordions">
+          {%- for block in accordion_blocks -%}
+            <div class="kpdt__accordion-item" {{ block.shopify_attributes }}>
+              <div class="kpdt__accordion-header">
+                <span class="kpdt__accordion-title">{{ block.settings.title }}</span>
+                <svg class="kpdt__accordion-icon" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1L8 9L15 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="kpdt__accordion-body">
+                <div class="kpdt__accordion-body-inner">{{ block.settings.content }}</div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+
+  {%- comment -%} ── RIGHT: Info blocks ── {%- endcomment -%}
+  <div class="kpdt__right-col">
+    <div class="kpdt__right-inner">
+      {% for block in section.blocks %}
+        {% if block.type == 'info_block' %}
+          <div class="kpdt__info-block" {{ block.shopify_attributes }}>
+            {% if block.settings.title != blank %}
+              <p
+                class="kpdt__info-title"
+                style="
+                  font-size: clamp({{ block.settings.title_size | times: 0.75 | round }}px, {{ block.settings.title_size | divided_by: 14.4 }}vw, {{ block.settings.title_size | times: 1.4 | round }}px);
+                  font-weight: {{ block.settings.title_weight }};
+                  letter-spacing: {{ block.settings.title_letter_spacing | divided_by: 100.0 }}em;
+                  line-height: {{ block.settings.title_line_height | divided_by: 10.0 }};
+                  text-transform: {{ block.settings.title_transform }};
+                  color: {{ block.settings.title_color }};
+                "
+              >{{ block.settings.title }}</p>
+            {% endif %}
+            {% if block.settings.description != blank %}
+              <div
+                class="kpdt__info-desc"
+                style="
+                  font-size: clamp({{ block.settings.desc_size | times: 0.75 | round }}px, {{ block.settings.desc_size | divided_by: 14.4 }}vw, {{ block.settings.desc_size | times: 1.4 | round }}px);
+                  font-weight: {{ block.settings.desc_weight }};
+                  letter-spacing: {{ block.settings.desc_letter_spacing | divided_by: 100.0 }}em;
+                  line-height: {{ block.settings.desc_line_height | divided_by: 10.0 }};
+                  text-transform: {{ block.settings.desc_transform }};
+                  color: {{ block.settings.desc_color }};
+                "
+              >{{ block.settings.description }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+/* ── MOBILE: accordion reorder + slider ── */
+(function() {
+  if (window.innerWidth > 749) return;
+
+  /* Move accordion after right-col */
+  var section    = document.querySelector('.kpdt-{{ section.id }}');
+  var accordions = section ? section.querySelector('.kpdt__accordions') : null;
+  var rightCol   = section ? section.querySelector('.kpdt__right-col') : null;
+  if (accordions && rightCol) {
+    section.insertBefore(accordions, rightCol.nextSibling);
+  }
+
+  var col        = document.querySelector('.kpdt-{{ section.id }} .kpdt__left-col');
+  var track      = col ? col.querySelector('.kpdt__slider-track') : null;
+  var nextBtn    = col ? col.querySelector('.kpdt__slider-next') : null;
+  var indicators = col ? col.querySelectorAll('.kpdt__indicator') : [];
+  var total      = indicators.length;
+
+  if (!track || total <= 1) return;
+
+  var current = 0;
+  var rafId   = null;
+
+  function updateIndicators(idx) {
+    current = idx;
+    indicators.forEach(function(ind, i) {
+      ind.classList.toggle('is-active', i === idx);
+    });
+  }
+
+  function goTo(idx) {
+    var target = (idx + total) % total;
+    track.scrollTo({ left: target * track.offsetWidth, behavior: 'smooth' });
+    updateIndicators(target);
+  }
+
+  /* Update indicators on scroll using rAF — no timeouts, no race conditions */
+  track.addEventListener('scroll', function() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(function() {
+      var idx = Math.round(track.scrollLeft / track.offsetWidth);
+      if (idx !== current) updateIndicators(idx);
+    });
+  }, { passive: true });
+
+  /* Next button: infinite wrap */
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() {
+      goTo(current + 1);
+    });
+  }
+})();
+</script>
+
+<script>
+/* ── ACCORDION ── */
+(function() {
+  function initAccordion(section) {
+    if (!section) return;
+    var items = section.querySelectorAll('.kpdt__accordion-item');
+    items.forEach(function(item) {
+      var header = item.querySelector('.kpdt__accordion-header');
+      if (!header) return;
+      header.addEventListener('click', function() {
+        var isOpen = item.classList.contains('is-open');
+        items.forEach(function(i) { i.classList.remove('is-open'); });
+        if (!isOpen) {
+          item.classList.add('is-open');
+          if (window.innerWidth > 749) {
+            setTimeout(function() {
+              var headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 0;
+              var target  = item.getBoundingClientRect().top + window.scrollY - headerH;
+              var start   = window.scrollY;
+              var dist    = target - start;
+              var duration = Math.min(Math.max(Math.abs(dist) * 0.6, 400), 900);
+              var startTime = null;
+              function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+              function step(ts) {
+                if (!startTime) startTime = ts;
+                var progress = Math.min((ts - startTime) / duration, 1);
+                window.scrollTo(0, start + dist * ease(progress));
+                if (progress < 1) requestAnimationFrame(step);
+              }
+              requestAnimationFrame(step);
+            }, 350);
+          }
+        }
+      });
+    });
+  }
+
+  var section = document.querySelector('.kpdt-{{ section.id }}');
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { initAccordion(section); });
+  } else {
+    initAccordion(section);
+  }
+
+  document.addEventListener('shopify:section:load', function(e) {
+    if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+      initAccordion(e.target.querySelector('.kpdt-{{ section.id }}'));
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Kimao Product Detail Top",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Genel"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Arka plan rengi",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Sütun Genişlikleri"
+    },
+    {
+      "type": "range",
+      "id": "left_width",
+      "label": "Sol sütun",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "middle_width",
+      "label": "Orta sütun",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "right_width",
+      "label": "Sağ sütun",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Sütun iç boşluk (px)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Kategori"
+    },
+    {
+      "type": "color",
+      "id": "category_color",
+      "label": "Renk",
+      "default": "#888888"
+    },
+    {
+      "type": "range",
+      "id": "category_size",
+      "label": "Büyüklük (px)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "select",
+      "id": "category_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "category_letter_spacing",
+      "label": "Harf aralığı (×0.01em)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "category_line_height",
+      "label": "Satır yüksekliği (×0.1)",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "category_transform",
+      "label": "Büyük/küçük harf",
+      "options": [
+        { "value": "none", "label": "Değişiklik yok" },
+        { "value": "uppercase", "label": "BÜYÜK HARF" },
+        { "value": "lowercase", "label": "küçük harf" },
+        { "value": "capitalize", "label": "Her Kelime Büyük" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Ürün Başlığı"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Renk",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Büyüklük (px)",
+      "min": 16,
+      "max": 64,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Harf aralığı (×0.01em)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Satır yüksekliği (×0.1)",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "title_transform",
+      "label": "Büyük/küçük harf",
+      "options": [
+        { "value": "none", "label": "Değişiklik yok" },
+        { "value": "uppercase", "label": "BÜYÜK HARF" },
+        { "value": "lowercase", "label": "küçük harf" },
+        { "value": "capitalize", "label": "Her Kelime Büyük" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Sepete Ekle — Boyut"
+    },
+    {
+      "type": "range",
+      "id": "atc_padding_y",
+      "label": "Dikey padding (px)",
+      "min": 6,
+      "max": 40,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "atc_padding_x",
+      "label": "Yatay padding (px)",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "atc_radius",
+      "label": "Köşe yuvarlaklığı (×0.05rem)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Sepete Ekle — Yazı"
+    },
+    {
+      "type": "color",
+      "id": "atc_bg_color",
+      "label": "Buton arka plan rengi",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "atc_label_color",
+      "label": "Yazı rengi",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "atc_label_size",
+      "label": "Büyüklük (px)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "atc_label_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "atc_label_letter_spacing",
+      "label": "Harf aralığı (×0.01em)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "atc_label_transform",
+      "label": "Büyük/küçük harf",
+      "options": [
+        { "value": "none", "label": "Değişiklik yok" },
+        { "value": "uppercase", "label": "BÜYÜK HARF" },
+        { "value": "lowercase", "label": "küçük harf" },
+        { "value": "capitalize", "label": "Her Kelime Büyük" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Sepete Ekle — Fiyat"
+    },
+    {
+      "type": "color",
+      "id": "atc_price_color",
+      "label": "Renk",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "atc_price_size",
+      "label": "Büyüklük (px)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "atc_price_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "atc_price_letter_spacing",
+      "label": "Harf aralığı (×0.01em)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Ürün Açıklaması"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Renk",
+      "default": "#555555"
+    },
+    {
+      "type": "range",
+      "id": "desc_size",
+      "label": "Büyüklük (px)",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "desc_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "desc_letter_spacing",
+      "label": "Harf aralığı (×0.01em)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "desc_line_height",
+      "label": "Satır yüksekliği (×0.1)",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "select",
+      "id": "desc_transform",
+      "label": "Büyük/küçük harf",
+      "options": [
+        { "value": "none", "label": "Değişiklik yok" },
+        { "value": "uppercase", "label": "BÜYÜK HARF" },
+        { "value": "lowercase", "label": "küçük harf" },
+        { "value": "capitalize", "label": "Her Kelime Büyük" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Accordion"
+    },
+    {
+      "type": "range",
+      "id": "accordion_padding",
+      "label": "Dikey boşluk (px)",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "accordion_title_size",
+      "label": "Başlık büyüklüğü (px)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "accordion_title_weight",
+      "label": "Başlık kalınlığı",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "accordion_title_letter_spacing",
+      "label": "Başlık harf aralığı (×0.01em)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "accordion_title_transform",
+      "label": "Başlık büyük/küçük harf",
+      "options": [
+        { "value": "none", "label": "Değişiklik yok" },
+        { "value": "uppercase", "label": "BÜYÜK HARF" },
+        { "value": "lowercase", "label": "küçük harf" },
+        { "value": "capitalize", "label": "Her Kelime Büyük" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "accordion_content_color",
+      "label": "İçerik rengi",
+      "default": "#555555"
+    },
+    {
+      "type": "range",
+      "id": "accordion_content_size",
+      "label": "İçerik büyüklüğü (px)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "accordion_content_weight",
+      "label": "İçerik kalınlığı",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "accordion_content_letter_spacing",
+      "label": "İçerik harf aralığı (×0.01em)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "accordion_content_line_height",
+      "label": "İçerik satır yüksekliği (×0.1)",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion_item",
+      "name": "Accordion Öğesi",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Başlık",
+          "default": "Başlık"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "İçerik",
+          "info": "Metafield'a bağlamak için Dynamic source kullan"
+        }
+      ]
+    },
+    {
+      "type": "info_block",
+      "name": "Bilgi Bloğu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Başlık",
+          "info": "Metafield'a bağlamak için Dynamic source kullan"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Açıklama",
+          "info": "Metafield'a bağlamak için Dynamic source kullan"
+        },
+        {
+          "type": "header",
+          "content": "Başlık Stili"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Renk",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Büyüklük (px)",
+          "min": 10,
+          "max": 28,
+          "step": 1,
+          "default": 12
+        },
+        {
+          "type": "select",
+          "id": "title_weight",
+          "label": "Kalınlık",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi-Bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "range",
+          "id": "title_letter_spacing",
+          "label": "Harf aralığı (×0.01em)",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "title_line_height",
+          "label": "Satır yüksekliği (×0.1)",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "default": 13
+        },
+        {
+          "type": "select",
+          "id": "title_transform",
+          "label": "Büyük/küçük harf",
+          "options": [
+            { "value": "none", "label": "Değişiklik yok" },
+            { "value": "uppercase", "label": "BÜYÜK HARF" },
+            { "value": "lowercase", "label": "küçük harf" },
+            { "value": "capitalize", "label": "Her Kelime Büyük" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "header",
+          "content": "Açıklama Stili"
+        },
+        {
+          "type": "color",
+          "id": "desc_color",
+          "label": "Renk",
+          "default": "#555555"
+        },
+        {
+          "type": "range",
+          "id": "desc_size",
+          "label": "Büyüklük (px)",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "default": 13
+        },
+        {
+          "type": "select",
+          "id": "desc_weight",
+          "label": "Kalınlık",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi-Bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "400"
+        },
+        {
+          "type": "range",
+          "id": "desc_letter_spacing",
+          "label": "Harf aralığı (×0.01em)",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "desc_line_height",
+          "label": "Satır yüksekliği (×0.1)",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "default": 15
+        },
+        {
+          "type": "select",
+          "id": "desc_transform",
+          "label": "Büyük/küçük harf",
+          "options": [
+            { "value": "none", "label": "Değişiklik yok" },
+            { "value": "uppercase", "label": "BÜYÜK HARF" },
+            { "value": "lowercase", "label": "küçük harf" },
+            { "value": "capitalize", "label": "Her Kelime Büyük" }
+          ],
+          "default": "none"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kimao Product Detail Top",
+      "blocks": [
+        {
+          "type": "info_block",
+          "settings": { "title": "pH Değeri" }
+        },
+        {
+          "type": "info_block",
+          "settings": { "title": "Cilt Tipi" }
+        },
+        {
+          "type": "info_block",
+          "settings": { "title": "Hacim" }
+        },
+        {
+          "type": "info_block",
+          "settings": { "title": "Doku" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

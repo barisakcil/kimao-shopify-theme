@@ -1,0 +1,37 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "placeholder": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "collection_grid_JWKadT": {
+      "type": "collection-grid",
+      "name": "Collection Grid",
+      "settings": {
+        "collection": "serum",
+        "grid_image": "shopify://shop_images/3090d1193b19600e810cff4d26b73303.webp",
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "products_to_show": 5
+      }
+    }
+  },
+  "order": [
+    "placeholder",
+    "collection_grid_JWKadT"
+  ]
+}

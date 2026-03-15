@@ -1,0 +1,675 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<style>
+  .infinite-slider-{{ section.id }} {
+    --slider-height: clamp({{ section.settings.slider_height }}px, {{ section.settings.slider_height | times: 100.0 | divided_by: 1440 | round: 2 }}vw, {{ section.settings.slider_height | times: 1.4 | round: 0 }}px);
+    --card-width: clamp({{ section.settings.card_width }}px, {{ section.settings.card_width | times: 100.0 | divided_by: 1440 | round: 2 }}vw, {{ section.settings.card_width | times: 1.4 | round: 0 }}px);
+    --wide-slide-width: clamp({{ section.settings.wide_slide_width }}px, {{ section.settings.wide_slide_width | times: 100.0 | divided_by: 1440 | round: 2 }}vw, {{ section.settings.wide_slide_width | times: 1.4 | round: 0 }}px);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  /* Side panel */
+  .infinite-slider-{{ section.id }} .inf-side-panel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: clamp(70px, 4.86vw, 98px);
+    height: 100%;
+    background: rgb(var(--color-background));
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    border-right: 1px solid #000;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-side-panel span {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: clamp(12px, 0.83vw, 17px);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgb(var(--color-foreground));
+    white-space: nowrap;
+  }
+
+  /* Track */
+  .infinite-slider-{{ section.id }} .inf-track {
+    display: flex;
+    height: var(--slider-height);
+    cursor: grab;
+    will-change: transform;
+    margin-left: clamp(70px, 4.86vw, 98px);
+  }
+
+  .infinite-slider-{{ section.id }} .inf-track.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-track.is-animating {
+    transition: transform 0.1s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  /* Slide base */
+  .infinite-slider-{{ section.id }} .inf-slide {
+    flex-shrink: 0;
+    height: 100%;
+    border: 1px solid #000;
+    margin-left: -1px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Product slide */
+  .infinite-slider-{{ section.id }} .inf-slide--product {
+    width: var(--card-width);
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+  }
+
+  .infinite-slider-{{ section.id }} .inf-slide--product a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-slide--product img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+
+  /* Wide slide */
+  .infinite-slider-{{ section.id }} .inf-slide--wide {
+    width: var(--wide-slide-width);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    background: rgb(var(--color-background));
+  }
+
+  .infinite-slider-{{ section.id }} .inf-slide--wide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-slide--wide .inf-wide-text {
+    position: relative;
+    z-index: 2;
+    padding: clamp(20px, 1.39vw, 28px) clamp(24px, 1.67vw, 34px);
+    font-size: clamp(20px, 1.39vw, 28px);
+    line-height: 1.2;
+    color: rgb(var(--color-foreground));
+  }
+
+  /* Next button */
+  .infinite-slider-{{ section.id }} .inf-next-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(44px, 3.06vw, 62px);
+    height: clamp(44px, 3.06vw, 62px);
+    border-radius: 0;
+    z-index: 2;
+    background: rgba(242, 233, 222, 0.9);
+    border: 1px solid #000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-next-btn .icon {
+    width: clamp(16px, 1.11vw, 22px);
+    height: clamp(16px, 1.11vw, 22px);
+  }
+
+  .infinite-slider-{{ section.id }} .inf-next-btn:hover {
+    background: rgba(242, 233, 222, 1);
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 749px) {
+    .infinite-slider-{{ section.id }} {
+      --card-width: calc({{ section.settings.card_width }}px * 0.83);
+      --slider-height: calc({{ section.settings.slider_height }}px * 0.85);
+    }
+
+    .infinite-slider-{{ section.id }} .inf-side-panel {
+      width: 50px;
+    }
+
+    .infinite-slider-{{ section.id }} .inf-track {
+      margin-left: 50px;
+    }
+
+    .infinite-slider-{{ section.id }} .inf-slide--wide {
+      display: none;
+    }
+  }
+</style>
+
+{%- liquid
+  assign collection = section.settings.collection
+  assign products_limit = section.settings.products_to_show
+-%}
+
+<div class="section-{{ section.id }}-padding">
+  <div class="infinite-slider-{{ section.id }} color-{{ section.settings.color_scheme }}" data-section-id="{{ section.id }}">
+    {%- comment -%} Side panel {%- endcomment -%}
+    <div class="inf-side-panel">
+      <span>{{ section.settings.side_text | escape }}</span>
+    </div>
+
+    {%- comment -%} Track {%- endcomment -%}
+    <div class="inf-track" data-inf-track>
+      {%- comment -%} Wide slide (static, desktop only) {%- endcomment -%}
+      <div class="inf-slide inf-slide--wide" data-inf-wide{% unless section.settings.show_wide_slide %} style="display:none;"{% endunless %}>
+        {%- if section.settings.wide_image != blank -%}
+          <img
+            src="{{ section.settings.wide_image | image_url: width: 900 }}"
+            srcset="{{ section.settings.wide_image | image_url: width: 450 }} 450w,
+                    {{ section.settings.wide_image | image_url: width: 900 }} 900w"
+            sizes="(max-width: 749px) 0px, {{ section.settings.wide_slide_width }}px"
+            alt="{{ section.settings.wide_image.alt | escape }}"
+            width="{{ section.settings.wide_image.width }}"
+            height="{{ section.settings.wide_image.height }}"
+            loading="lazy"
+          >
+        {%- endif -%}
+        <div class="inf-wide-text">{{ section.settings.wide_text }}</div>
+      </div>
+
+      {%- comment -%} Product slides {%- endcomment -%}
+      {%- if collection != blank and collection.products.size > 0 -%}
+        {%- for product in collection.products limit: products_limit -%}
+          <div class="inf-slide inf-slide--product color-{{ section.settings.card_color_scheme }}" data-inf-product data-index="{{ forloop.index0 }}">
+            <a href="{{ product.url }}">
+              {%- if product.featured_image != blank -%}
+                <img
+                  src="{{ product.featured_image | image_url: width: 600 }}"
+                  srcset="{{ product.featured_image | image_url: width: 300 }} 300w,
+                          {{ product.featured_image | image_url: width: 450 }} 450w,
+                          {{ product.featured_image | image_url: width: 600 }} 600w"
+                  sizes="(max-width: 749px) {{ section.settings.card_width | times: 0.83 | round: 0 }}px, {{ section.settings.card_width }}px"
+                  alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                  width="{{ product.featured_image.width }}"
+                  height="{{ product.featured_image.height }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </a>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <div class="inf-slide inf-slide--product color-{{ section.settings.card_color_scheme }}" data-inf-product>
+            {{ 'product-apparel-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Next button {%- endcomment -%}
+    <button class="inf-next-btn" data-inf-next aria-label="{{ 'general.slider.next_slide' | t }}">
+      <span class="svg-wrapper">
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </span>
+    </button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var SECTION_ID = '{{ section.id }}';
+
+    function init(container) {
+      if (!container) return;
+
+      var track = container.querySelector('[data-inf-track]');
+      var nextBtn = container.querySelector('[data-inf-next]');
+      if (!track) return;
+
+      var origSlides = [];
+      var visibleCount = 0;
+      var offsets = [];       /* cumulative left-edge of each slide in the 3x track */
+      var currentIndex = 0;   /* index within the MIDDLE (original) set */
+      var animating = false;
+      var isDragging = false;
+      var dragStartX = 0;
+      var dragCurrentX = 0;
+      var startIndex = 0;
+      var startTranslateX = 0;
+      var THRESHOLD = 50;
+      var resizeTimer = null;
+      var touchStartY = 0;
+      var touchLocked = false;  /* true = confirmed horizontal drag */
+      var touchRejected = false; /* true = vertical scroll, ignore drag */
+
+      /* Build track: [clone-set] [original-set] [clone-set] */
+      function buildTrack() {
+        var clones = track.querySelectorAll('[data-inf-clone]');
+        for (var c = 0; c < clones.length; c++) {
+          track.removeChild(clones[c]);
+        }
+
+        origSlides = Array.prototype.slice.call(
+          track.querySelectorAll('.inf-slide:not([data-inf-clone])')
+        );
+
+        var visibleSlides = origSlides.filter(function(s) {
+          return s.offsetWidth > 0;
+        });
+        visibleCount = visibleSlides.length;
+
+        /* Prepend clone set */
+        for (var i = visibleSlides.length - 1; i >= 0; i--) {
+          var pre = visibleSlides[i].cloneNode(true);
+          pre.setAttribute('data-inf-clone', 'pre');
+          pre.querySelectorAll('a').forEach(function(a) { a.setAttribute('tabindex', '-1'); });
+          track.insertBefore(pre, track.firstChild);
+        }
+
+        /* Append clone set */
+        for (var j = 0; j < visibleSlides.length; j++) {
+          var post = visibleSlides[j].cloneNode(true);
+          post.setAttribute('data-inf-clone', 'post');
+          post.querySelectorAll('a').forEach(function(a) { a.setAttribute('tabindex', '-1'); });
+          track.appendChild(post);
+        }
+      }
+
+      /* Build offset table: the exact left-edge pixel of every slide in the 3x track */
+      function measure() {
+        offsets = [];
+        var allSlides = Array.prototype.slice.call(track.children);
+        var cumulative = 0;
+        for (var i = 0; i < allSlides.length; i++) {
+          var w = allSlides[i].getBoundingClientRect().width;
+          if (w === 0) continue;  /* skip hidden (wide slide on mobile) */
+          offsets.push(cumulative);
+          /* -1px margin collapse */
+          cumulative += w - 1;
+        }
+
+        /* On resize: keep current position; only reset to 0 on first build */
+        if (currentIndex >= visibleCount) currentIndex = 0;
+        applySnapPosition(false);
+      }
+
+      /* Given a logical index (0 = first original slide), compute the translateX
+         so that slide's left edge aligns with the side panel's right edge */
+      function getTranslateForIndex(idx) {
+        /* The middle set starts at offset position [visibleCount] in the offsets array */
+        var realIdx = visibleCount + idx;
+        if (realIdx < 0 || realIdx >= offsets.length) realIdx = visibleCount;
+        return -offsets[realIdx];
+      }
+
+      function applySnapPosition(animate) {
+        var tx = getTranslateForIndex(currentIndex);
+        if (animate) {
+          track.classList.add('is-animating');
+        } else {
+          track.classList.remove('is-animating');
+        }
+        track.style.transform = 'translateX(' + tx + 'px)';
+      }
+
+      function applyRawTranslate(px) {
+        track.classList.remove('is-animating');
+        track.style.transform = 'translateX(' + px + 'px)';
+      }
+
+      /* Move by one slide */
+      function slideByOne(dir) {
+        if (animating) return;
+        animating = true;
+        currentIndex += dir;
+        applySnapPosition(true);
+      }
+
+      /* After animation: wrap index back into original set range */
+      function onTransitionEnd() {
+        track.classList.remove('is-animating');
+        animating = false;
+
+        /* Wrap: if index went beyond original set, teleport silently */
+        if (currentIndex >= visibleCount) {
+          currentIndex -= visibleCount;
+          applySnapPosition(false);
+        } else if (currentIndex < 0) {
+          currentIndex += visibleCount;
+          applySnapPosition(false);
+        }
+      }
+
+      /* Read current computed translateX from the browser */
+      function getCurrentTranslateX() {
+        var st = window.getComputedStyle(track);
+        var matrix = st.transform || st.webkitTransform;
+        if (matrix && matrix !== 'none') {
+          var vals = matrix.match(/matrix.*\((.+)\)/);
+          if (vals) {
+            var parts = vals[1].split(', ');
+            return parseFloat(parts[4]) || 0;
+          }
+        }
+        return 0;
+      }
+
+      /* Find the closest logical index for a given translateX pixel value */
+      function findClosestIndex(tx) {
+        var best = 0;
+        var bestDist = Infinity;
+        for (var i = -visibleCount; i < visibleCount * 2; i++) {
+          var candidate = getTranslateForIndex(i);
+          var dist = Math.abs(candidate - tx);
+          if (dist < bestDist) {
+            bestDist = dist;
+            best = i;
+          }
+        }
+        return best;
+      }
+
+      /* Drag */
+      function onDragStart(x) {
+        /* If animating, cancel animation and grab from current position */
+        if (animating) {
+          var liveX = getCurrentTranslateX();
+          track.classList.remove('is-animating');
+          track.style.transform = 'translateX(' + liveX + 'px)';
+          currentIndex = findClosestIndex(liveX);
+          animating = false;
+        }
+        isDragging = true;
+        dragStartX = x;
+        dragCurrentX = x;
+        startIndex = currentIndex;
+        startTranslateX = getTranslateForIndex(currentIndex);
+        track.classList.add('is-dragging');
+      }
+
+      function onDragMove(x) {
+        if (!isDragging) return;
+        dragCurrentX = x;
+        var diff = dragCurrentX - dragStartX;
+        applyRawTranslate(startTranslateX + diff);
+      }
+
+      function onDragEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        track.classList.remove('is-dragging');
+        var diff = dragCurrentX - dragStartX;
+
+        if (Math.abs(diff) > THRESHOLD) {
+          /* dragged right = previous slide, dragged left = next slide */
+          currentIndex = startIndex + (diff > 0 ? -1 : 1);
+        } else {
+          currentIndex = startIndex;
+        }
+        animating = true;
+        applySnapPosition(true);
+      }
+
+      /* Mouse events */
+      track.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        onDragStart(e.clientX);
+      });
+      window.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        onDragMove(e.clientX);
+      });
+      window.addEventListener('mouseup', function() {
+        onDragEnd();
+      });
+
+      /* Touch events with vertical/horizontal intent detection */
+      track.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+        touchLocked = false;
+        touchRejected = false;
+        onDragStart(e.touches[0].clientX);
+      }, { passive: true });
+      track.addEventListener('touchmove', function(e) {
+        if (!isDragging || touchRejected) return;
+        var dx = Math.abs(e.touches[0].clientX - dragStartX);
+        var dy = Math.abs(e.touches[0].clientY - touchStartY);
+        /* First significant move: decide direction */
+        if (!touchLocked && (dx > 8 || dy > 8)) {
+          if (dy > dx) {
+            /* Vertical intent — cancel drag, let browser scroll */
+            touchRejected = true;
+            isDragging = false;
+            track.classList.remove('is-dragging');
+            applySnapPosition(false);
+            return;
+          }
+          touchLocked = true;
+        }
+        if (touchLocked) {
+          onDragMove(e.touches[0].clientX);
+        }
+      }, { passive: true });
+      track.addEventListener('touchend', function() {
+        if (touchRejected) return;
+        onDragEnd();
+      });
+
+      /* Prevent click after drag */
+      track.addEventListener('click', function(e) {
+        if (Math.abs(dragCurrentX - dragStartX) > 5) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      /* Transition end */
+      track.addEventListener('transitionend', onTransitionEnd);
+
+      /* Next button */
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+          slideByOne(1);
+        });
+      }
+
+      /* Resize */
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          buildTrack();
+          measure();
+        }, 250);
+      });
+
+      /* Go */
+      buildTrack();
+      measure();
+    }
+
+    /* Initial load */
+    var el = document.querySelector('.infinite-slider-' + SECTION_ID);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        init(document.querySelector('.infinite-slider-' + SECTION_ID));
+      });
+    } else {
+      init(el);
+    }
+
+    /* Shopify editor reload */
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.detail.sectionId === SECTION_ID) {
+        init(e.target.querySelector('.infinite-slider-' + SECTION_ID));
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Kimao Infinite Slider",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 25,
+      "step": 1,
+      "default": 12,
+      "label": "Maximum products to show"
+    },
+    {
+      "type": "header",
+      "content": "Side panel"
+    },
+    {
+      "type": "text",
+      "id": "side_text",
+      "default": "SHOP NOW",
+      "label": "Side panel text"
+    },
+    {
+      "type": "header",
+      "content": "Wide slide (desktop only)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wide_slide",
+      "label": "Show wide slide",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "wide_image",
+      "label": "Wide slide image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "wide_text",
+      "default": "New Collection",
+      "label": "Wide slide text"
+    },
+    {
+      "type": "range",
+      "id": "wide_slide_width",
+      "min": 300,
+      "max": 1000,
+      "step": 10,
+      "default": 440,
+      "unit": "px",
+      "label": "Wide slide width"
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "min": 200,
+      "max": 600,
+      "step": 5,
+      "default": 300,
+      "unit": "px",
+      "label": "Product card width"
+    },
+    {
+      "type": "range",
+      "id": "slider_height",
+      "min": 200,
+      "max": 800,
+      "step": 10,
+      "default": 400,
+      "unit": "px",
+      "label": "Slider height"
+    },
+
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Section color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Product card color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Infinite Collection Slider"
+    }
+  ]
+}
+{% endschema %}

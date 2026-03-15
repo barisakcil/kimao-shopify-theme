@@ -1,0 +1,38 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_grid_8ynk6L": {
+      "type": "collection-grid",
+      "name": "Collection Grid",
+      "settings": {
+        "collection": "serum",
+        "grid_image": "shopify://shop_images/3090d1193b19600e810cff4d26b73303.webp",
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "products_to_show": 5
+      }
+    },
+    "kimao_girl_animation_9hdyfC": {
+      "type": "kimao-girl-animation",
+      "name": "Kimao Girl Animation",
+      "settings": {
+        "section_height": 40,
+        "overlay_opacity": 0,
+        "font_size": 150,
+        "font_size_mobile": 60,
+        "anim_speed": 3
+      }
+    }
+  },
+  "order": [
+    "collection_grid_8ynk6L",
+    "kimao_girl_animation_9hdyfC"
+  ]
+}
