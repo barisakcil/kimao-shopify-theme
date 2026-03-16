@@ -70,17 +70,28 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  line-height: 1;
 }
 
 .ki-social-icon {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  width: 22px;
+  height: 22px;
 }
 
 .ki-social-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.ki-social-link > span:last-child {
+  display: block;
+  line-height: 1;
+  padding-top: 1px;
 }
 
 /* Mobile bottom (hidden on desktop) */
@@ -278,14 +289,26 @@
     border-left: none;
   }
 
-  /* Media column: back to block on mobile */
+  /* Medya column: back to block, no border-left */
   .kimao-footer__column--media {
-    flex-direction: column;
+    display: block;
+    width: 100%;
   }
 
   .ki-media-content {
     display: block;
+    width: 100%;
     padding: 0;
+  }
+
+  /* Hide accordion heading on mobile — links always visible */
+  .kimao-footer__column--media .kimao-footer__heading {
+    display: none;
+  }
+
+  /* Hide text labels on mobile — icons only */
+  .kimao-footer__column--media .ki-social-link > span:last-child {
+    display: none;
   }
 
   /* Hide desktop vertical credits on mobile */
@@ -299,11 +322,7 @@
   }
 
   .ki-mobile-social {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    padding: 24px;
-    border-bottom: 1px solid var(--kimao-border-color, #000);
+    display: none;
   }
 
   .ki-mobile-social__link {
@@ -380,6 +399,42 @@
 
   .kimao-footer__links li:first-child {
     border-top: 1px solid var(--kimao-border-color, #000);
+  }
+
+  /* Media column: ezip geçen overrides — bu blok en sonda olmalı */
+  .kimao-footer__column--media .kimao-footer__links,
+  .kimao-footer__column--media .kimao-footer__links.open {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+    width: 100%;
+    box-sizing: border-box;
+    max-height: none !important;
+    overflow: visible;
+  }
+
+  .kimao-footer__column--media .kimao-footer__links li,
+  .kimao-footer__column--media .kimao-footer__links li:first-child {
+    border: none !important;
+    padding: 0;
+    margin: 0;
+  }
+
+  .kimao-footer__column--media .ki-social-icon,
+  .kimao-footer__column--media .ki-social-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Social link touch area fix — mobile padding/margin override */
+  .kimao-footer__column--media .ki-social-link {
+    display: inline-flex;
+    padding: 8px;
+    margin: 0;
   }
 
   /* Extras */

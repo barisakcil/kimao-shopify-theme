@@ -20,6 +20,7 @@
     position: relative;
     overflow: hidden;
     width: 100%;
+    z-index: 1;
   }
 
   /* Side panel */
@@ -85,7 +86,7 @@
     color: rgb(var(--color-foreground));
   }
 
-  .infinite-slider-{{ section.id }} .inf-slide--product a {
+  .infinite-slider-{{ section.id }} .inf-slide--product > a {
     display: block;
     width: 100%;
     height: 100%;
@@ -97,6 +98,123 @@
     object-fit: cover;
     display: block;
     pointer-events: none;
+  }
+
+  /* Hover drawer */
+  .infinite-slider-{{ section.id }} .inf-hover-drawer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    padding: clamp(14px, 1vw, 20px) clamp(16px, 1.11vw, 22px);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 3;
+    border-top: 1px solid #000;
+  }
+
+  @media (hover: hover) {
+    .infinite-slider-{{ section.id }} .inf-slide--product:hover .inf-hover-drawer {
+      transform: translateY(0);
+    }
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 0 12px;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-title {
+    font-size: {{ section.settings.drawer_title_size }}px;
+    font-weight: {{ section.settings.drawer_title_weight }};
+    letter-spacing: {{ section.settings.drawer_title_letter_spacing | divided_by: 100.0 }}em;
+    text-transform: {{ section.settings.drawer_title_transform }};
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-category {
+    font-size: {{ section.settings.drawer_category_size }}px;
+    font-weight: {{ section.settings.drawer_category_weight }};
+    letter-spacing: {{ section.settings.drawer_category_letter_spacing | divided_by: 100.0 }}em;
+    text-transform: {{ section.settings.drawer_category_transform }};
+    opacity: 0.6;
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-form {
+    margin: 0;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-atc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: clamp(10px, 0.76vw, 14px) clamp(12px, 0.9vw, 16px);
+    background: {{ section.settings.drawer_atc_bg }};
+    color: {{ section.settings.drawer_atc_color }};
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    margin-bottom: 8px;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-atc:hover {
+    opacity: 0.85;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-atc[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-atc-label {
+    font-size: {{ section.settings.drawer_atc_label_size }}px;
+    font-weight: {{ section.settings.drawer_atc_label_weight }};
+    letter-spacing: {{ section.settings.drawer_atc_label_letter_spacing | divided_by: 100.0 }}em;
+    text-transform: {{ section.settings.drawer_atc_label_transform }};
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-atc-price {
+    font-size: {{ section.settings.drawer_atc_price_size }}px;
+    font-weight: {{ section.settings.drawer_atc_price_weight }};
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-link {
+    display: inline-block;
+    font-size: {{ section.settings.drawer_link_size }}px;
+    font-weight: {{ section.settings.drawer_link_weight }};
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    letter-spacing: 0.04em;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-drawer-link:hover {
+    opacity: 1;
+  }
+
+  /* Mobile-only price (desktop: hidden, price lives in ATC button) */
+  .infinite-slider-{{ section.id }} .inf-drawer-price {
+    font-size: {{ section.settings.drawer_mob_price_size }}px;
+    font-weight: {{ section.settings.drawer_mob_price_weight }};
+    margin: 0;
+    display: none;
+  }
+
+  /* Quick-add "+" button (mobile only) */
+  .infinite-slider-{{ section.id }} .inf-quick-add {
+    display: none;
   }
 
   /* Wide slide */
@@ -159,19 +277,109 @@
   @media screen and (max-width: 749px) {
     .infinite-slider-{{ section.id }} {
       --card-width: calc({{ section.settings.card_width }}px * 0.83);
-      --slider-height: calc({{ section.settings.slider_height }}px * 0.85);
+    }
+
+    /* Remove fixed track height, let slides determine it */
+    .infinite-slider-{{ section.id }} .inf-track {
+      height: auto;
+      margin-left: 50px;
     }
 
     .infinite-slider-{{ section.id }} .inf-side-panel {
       width: 50px;
     }
 
-    .infinite-slider-{{ section.id }} .inf-track {
-      margin-left: 50px;
-    }
-
     .infinite-slider-{{ section.id }} .inf-slide--wide {
       display: none;
+    }
+
+    /* Slide becomes flex column: image on top, info below */
+    .infinite-slider-{{ section.id }} .inf-slide--product {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+
+    .infinite-slider-{{ section.id }} .inf-slide--product > a {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 4;
+      position: relative;
+    }
+
+    .infinite-slider-{{ section.id }} .inf-slide--product > a img {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* Drawer becomes static info block below image */
+    .infinite-slider-{{ section.id }} .inf-hover-drawer {
+      position: static;
+      transform: none;
+      transition: none;
+      padding: 10px 12px;
+      border-top: none;
+    }
+
+    .infinite-slider-{{ section.id }} .inf-drawer-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      margin-bottom: 4px;
+    }
+
+    .infinite-slider-{{ section.id }} .inf-drawer-title {
+      font-size: {{ section.settings.drawer_mob_title_size }}px;
+      font-weight: {{ section.settings.drawer_mob_title_weight }};
+      letter-spacing: {{ section.settings.drawer_mob_title_letter_spacing | divided_by: 100.0 }}em;
+      text-transform: {{ section.settings.drawer_mob_title_transform }};
+    }
+
+    .infinite-slider-{{ section.id }} .inf-drawer-category {
+      font-size: {{ section.settings.drawer_mob_category_size }}px;
+      font-weight: {{ section.settings.drawer_mob_category_weight }};
+      letter-spacing: {{ section.settings.drawer_mob_category_letter_spacing | divided_by: 100.0 }}em;
+      text-transform: {{ section.settings.drawer_mob_category_transform }};
+    }
+
+    .infinite-slider-{{ section.id }} .inf-drawer-price {
+      display: block;
+    }
+
+    /* Hide desktop-only elements */
+    .infinite-slider-{{ section.id }} .inf-drawer-form {
+      display: none;
+    }
+
+    .infinite-slider-{{ section.id }} .inf-drawer-link {
+      display: none;
+    }
+
+    /* Quick-add "+" button */
+    .infinite-slider-{{ section.id }} .inf-quick-add {
+      display: flex;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      background: rgb(var(--color-background));
+      color: rgb(var(--color-foreground));
+      border: 1px solid #000;
+      border-top: none;
+      border-right: none;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 4;
+      padding: 0;
+    }
+
+    .infinite-slider-{{ section.id }} .inf-quick-add:active {
+      opacity: 0.6;
     }
   }
 </style>
@@ -228,6 +436,33 @@
                 {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
               {%- endif -%}
             </a>
+            <button class="inf-quick-add" type="button" aria-label="Sepete Ekle"
+              data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+              {%- unless product.selected_or_first_available_variant.available %} disabled{% endunless %}>+</button>
+            <div class="inf-hover-drawer color-{{ section.settings.drawer_color_scheme }}">
+              <div class="inf-drawer-head">
+                <p class="inf-drawer-title">{{ product.title }}</p>
+                {%- if product.type != blank -%}
+                  <p class="inf-drawer-category">{{ product.type }}</p>
+                {%- endif -%}
+              </div>
+              <p class="inf-drawer-price">{{ product.selected_or_first_available_variant.price | money }}</p>
+              <form action="/cart/add" method="post" class="inf-drawer-form">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="inf-drawer-atc"
+                  {%- unless product.selected_or_first_available_variant.available %} disabled{% endunless %}>
+                  <span class="inf-drawer-atc-label">
+                    {%- if product.selected_or_first_available_variant.available -%}
+                      Sepete Ekle
+                    {%- else -%}
+                      Tükendi
+                    {%- endif -%}
+                  </span>
+                  <span class="inf-drawer-atc-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+                </button>
+              </form>
+              <a href="{{ product.url }}" class="inf-drawer-link">İncele →</a>
+            </div>
           </div>
         {%- endfor -%}
       {%- else -%}
@@ -507,6 +742,92 @@
         });
       }
 
+      /* Mobile "+" quick-add button */
+      container.addEventListener('click', function(e) {
+        var btn = e.target.closest('.inf-quick-add');
+        if (!btn || btn.disabled) return;
+        e.preventDefault();
+        e.stopPropagation();
+        btn.disabled = true;
+
+        var variantId = btn.getAttribute('data-variant-id');
+        var body = JSON.stringify({
+          id: parseInt(variantId, 10),
+          quantity: 1,
+          sections: 'cart-drawer,cart-icon-bubble',
+          sections_url: window.location.pathname
+        });
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: body
+        })
+        .then(function(res) {
+          if (!res.ok) throw new Error('add failed');
+          return res.json();
+        })
+        .then(function(data) {
+          var cartDrawer = document.querySelector('cart-drawer');
+          if (cartDrawer && cartDrawer.renderContents) {
+            cartDrawer.renderContents(data);
+            cartDrawer.classList.remove('is-empty');
+          } else if (cartDrawer && cartDrawer.open) {
+            cartDrawer.open();
+          }
+        })
+        .catch(function(err) {
+          console.error('Slider quick-add error:', err);
+        })
+        .finally(function() {
+          btn.disabled = false;
+        });
+      });
+
+      /* AJAX Add to Cart for hover drawer */
+      container.addEventListener('submit', function(e) {
+        var form = e.target.closest('.inf-drawer-form');
+        if (!form) return;
+        e.preventDefault();
+
+        var btn = form.querySelector('.inf-drawer-atc');
+        if (btn && btn.disabled) return;
+        if (btn) btn.disabled = true;
+
+        var formData = new FormData(form);
+        formData.append('sections', 'cart-drawer,cart-icon-bubble');
+        formData.append('sections_url', window.location.pathname);
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' },
+          body: formData
+        })
+        .then(function(res) {
+          if (!res.ok) throw new Error('add failed');
+          return res.json();
+        })
+        .then(function(data) {
+          var cartDrawer = document.querySelector('cart-drawer');
+          if (cartDrawer && cartDrawer.renderContents) {
+            cartDrawer.renderContents(data);
+            cartDrawer.classList.remove('is-empty');
+          } else if (cartDrawer && cartDrawer.open) {
+            cartDrawer.open();
+          }
+        })
+        .catch(function(err) {
+          console.error('Slider ATC error:', err);
+          form.submit();
+        })
+        .finally(function() {
+          if (btn) btn.disabled = false;
+        });
+      });
+
       /* Resize */
       window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
@@ -640,6 +961,294 @@
       "id": "card_color_scheme",
       "label": "Product card color scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Hover drawer — Renk"
+    },
+    {
+      "type": "color_scheme",
+      "id": "drawer_color_scheme",
+      "label": "Drawer renk şeması",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "drawer_atc_bg",
+      "label": "Sepete Ekle arka plan",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "drawer_atc_color",
+      "label": "Sepete Ekle yazı rengi",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Desktop — Ürün Adı"
+    },
+    {
+      "type": "range",
+      "id": "drawer_title_size",
+      "label": "Büyüklük (px)",
+      "min": 10, "max": 28, "step": 1, "default": 15
+    },
+    {
+      "type": "select",
+      "id": "drawer_title_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "drawer_title_letter_spacing",
+      "label": "Harf aralığı (×0.01em)",
+      "min": 0, "max": 30, "step": 1, "default": 3
+    },
+    {
+      "type": "select",
+      "id": "drawer_title_transform",
+      "label": "Büyük/küçük harf",
+      "options": [
+        { "value": "none", "label": "Değişiklik yok" },
+        { "value": "uppercase", "label": "BÜYÜK HARF" },
+        { "value": "lowercase", "label": "küçük harf" },
+        { "value": "capitalize", "label": "Her Kelime Büyük" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Desktop — Kategori"
+    },
+    {
+      "type": "range",
+      "id": "drawer_category_size",
+      "label": "Büyüklük (px)",
+      "min": 8, "max": 20, "step": 1, "default": 11
+    },
+    {
+      "type": "select",
+      "id": "drawer_category_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "drawer_category_letter_spacing",
+      "label": "Harf aralığı (×0.01em)",
+      "min": 0, "max": 30, "step": 1, "default": 8
+    },
+    {
+      "type": "select",
+      "id": "drawer_category_transform",
+      "label": "Büyük/küçük harf",
+      "options": [
+        { "value": "none", "label": "Değişiklik yok" },
+        { "value": "uppercase", "label": "BÜYÜK HARF" },
+        { "value": "lowercase", "label": "küçük harf" },
+        { "value": "capitalize", "label": "Her Kelime Büyük" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Desktop — Sepete Ekle Yazısı"
+    },
+    {
+      "type": "range",
+      "id": "drawer_atc_label_size",
+      "label": "Büyüklük (px)",
+      "min": 10, "max": 20, "step": 1, "default": 13
+    },
+    {
+      "type": "select",
+      "id": "drawer_atc_label_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "drawer_atc_label_letter_spacing",
+      "label": "Harf aralığı (×0.01em)",
+      "min": 0, "max": 30, "step": 1, "default": 4
+    },
+    {
+      "type": "select",
+      "id": "drawer_atc_label_transform",
+      "label": "Büyük/küçük harf",
+      "options": [
+        { "value": "none", "label": "Değişiklik yok" },
+        { "value": "uppercase", "label": "BÜYÜK HARF" },
+        { "value": "lowercase", "label": "küçük harf" },
+        { "value": "capitalize", "label": "Her Kelime Büyük" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Desktop — ATC Fiyat"
+    },
+    {
+      "type": "range",
+      "id": "drawer_atc_price_size",
+      "label": "Büyüklük (px)",
+      "min": 10, "max": 20, "step": 1, "default": 13
+    },
+    {
+      "type": "select",
+      "id": "drawer_atc_price_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "Desktop — İncele Linki"
+    },
+    {
+      "type": "range",
+      "id": "drawer_link_size",
+      "label": "Büyüklük (px)",
+      "min": 8, "max": 18, "step": 1, "default": 11
+    },
+    {
+      "type": "select",
+      "id": "drawer_link_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "header",
+      "content": "Mobil — Ürün Adı"
+    },
+    {
+      "type": "range",
+      "id": "drawer_mob_title_size",
+      "label": "Büyüklük (px)",
+      "min": 10, "max": 24, "step": 1, "default": 14
+    },
+    {
+      "type": "select",
+      "id": "drawer_mob_title_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "drawer_mob_title_letter_spacing",
+      "label": "Harf aralığı (×0.01em)",
+      "min": 0, "max": 30, "step": 1, "default": 3
+    },
+    {
+      "type": "select",
+      "id": "drawer_mob_title_transform",
+      "label": "Büyük/küçük harf",
+      "options": [
+        { "value": "none", "label": "Değişiklik yok" },
+        { "value": "uppercase", "label": "BÜYÜK HARF" },
+        { "value": "lowercase", "label": "küçük harf" },
+        { "value": "capitalize", "label": "Her Kelime Büyük" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Mobil — Kategori"
+    },
+    {
+      "type": "range",
+      "id": "drawer_mob_category_size",
+      "label": "Büyüklük (px)",
+      "min": 8, "max": 18, "step": 1, "default": 10
+    },
+    {
+      "type": "select",
+      "id": "drawer_mob_category_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "drawer_mob_category_letter_spacing",
+      "label": "Harf aralığı (×0.01em)",
+      "min": 0, "max": 30, "step": 1, "default": 8
+    },
+    {
+      "type": "select",
+      "id": "drawer_mob_category_transform",
+      "label": "Büyük/küçük harf",
+      "options": [
+        { "value": "none", "label": "Değişiklik yok" },
+        { "value": "uppercase", "label": "BÜYÜK HARF" },
+        { "value": "lowercase", "label": "küçük harf" },
+        { "value": "capitalize", "label": "Her Kelime Büyük" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Mobil — Fiyat"
+    },
+    {
+      "type": "range",
+      "id": "drawer_mob_price_size",
+      "label": "Büyüklük (px)",
+      "min": 10, "max": 20, "step": 1, "default": 13
+    },
+    {
+      "type": "select",
+      "id": "drawer_mob_price_weight",
+      "label": "Kalınlık",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
     },
     {
       "type": "header",

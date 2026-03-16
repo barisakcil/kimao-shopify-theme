@@ -36,6 +36,29 @@
     pointer-events: none;
   }
 
+  /* Top row: 2/5 height of a normal grid cell */
+  .collection-grid-{{ section.id }} .cg-cell--top-small {
+    grid-column: span 1;
+  }
+  .collection-grid-{{ section.id }} .cg-cell--top-small::before {
+    padding-bottom: 53.3%;
+  }
+  .collection-grid-{{ section.id }} .cg-cell--top-wide {
+    grid-column: span 2;
+  }
+  .collection-grid-{{ section.id }} .cg-cell--top-wide::before {
+    padding-bottom: 26.65%;
+  }
+  .collection-grid-{{ section.id }} .cg-top-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+  }
+
   .collection-grid-{{ section.id }} .cg-cell--product > a {
     position: absolute;
     inset: 0;
@@ -179,6 +202,20 @@
       grid-template-columns: 1fr 1fr;
     }
 
+    /* Top row: 1col stays 1col, 2col becomes full-width on mobile */
+    .collection-grid-{{ section.id }} .cg-cell--top-small {
+      grid-column: span 1;
+    }
+    .collection-grid-{{ section.id }} .cg-cell--top-small::before {
+      padding-bottom: 53.3%;
+    }
+    .collection-grid-{{ section.id }} .cg-cell--top-wide {
+      grid-column: span 1;
+    }
+    .collection-grid-{{ section.id }} .cg-cell--top-wide::before {
+      padding-bottom: 53.3%;
+    }
+
     /* Card becomes flex column: image on top, info below */
     .collection-grid-{{ section.id }} .cg-cell--product {
       display: flex;
@@ -278,6 +315,14 @@
 -%}
 
 <div class="collection-grid-{{ section.id }} color-{{ section.settings.color_scheme }}">
+  {%- comment -%} Top row: 1-col + 2-col cells {%- endcomment -%}
+  <div class="cg-cell cg-cell--top-small">
+    <span class="cg-top-text">{{ section.settings.top_small_text }}</span>
+  </div>
+  <div class="cg-cell cg-cell--top-wide">
+    <span class="cg-top-text">{{ section.settings.top_wide_text }}</span>
+  </div>
+
   {%- comment -%} Grid 1: Decorative image {%- endcomment -%}
   <div class="cg-cell cg-cell--image">
     {%- if section.settings.grid_image != blank -%}
@@ -469,13 +514,33 @@
 
 {% schema %}
 {
-  "name": "Collection Grid",
+  "name": "404 Grid",
   "tag": "section",
   "class": "section",
   "disabled_on": {
     "groups": ["header", "footer"]
   },
   "settings": [
+    {
+      "type": "header",
+      "content": "Üst satır"
+    },
+    {
+      "type": "text",
+      "id": "top_small_text",
+      "label": "Üst sol alan yazısı (1 sütun)",
+      "default": "404"
+    },
+    {
+      "type": "text",
+      "id": "top_wide_text",
+      "label": "Üst geniş alan yazısı (2 sütun)",
+      "default": "Sayfa bulunamadı"
+    },
+    {
+      "type": "header",
+      "content": "Grid"
+    },
     {
       "type": "collection",
       "id": "collection",
@@ -792,7 +857,7 @@
   ],
   "presets": [
     {
-      "name": "Collection Grid"
+      "name": "404 Grid"
     }
   ]
 }
