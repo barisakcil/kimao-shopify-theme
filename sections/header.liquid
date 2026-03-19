@@ -112,7 +112,14 @@
     grid-area: navigation;
     display: flex;
     align-items: center;
+    height: 70px;
     gap: 0.5rem;
+  }
+
+  /* Icons: align to bottom with shared padding */
+  .header__icons {
+    align-self: end;
+    padding-bottom: 15px;
   }
 
   /* Force burger visible on desktop */
@@ -122,9 +129,12 @@
     }
   }
 
-  /* Nav link spacing and styling */
+  /* Nav link spacing and styling — same padding-bottom as icons */
   .kimao-nav-left {
-    margin-top: 21px;
+    display: flex;
+    margin-top: auto;
+    padding-bottom: 11px;
+    line-height: 1;
   }
 
   .kimao-nav-left .list-menu--inline {
@@ -141,6 +151,7 @@
     text-transform: uppercase;
     text-decoration: none;
     color: rgb(var(--color-foreground));
+    font-weight: {{ section.settings.nav_link_font_weight }};
   }
 
   .kimao-nav-text {
@@ -148,11 +159,18 @@
     transition: transform 0.45s ease, opacity 0.45s ease;
   }
 
+  {% assign w = section.settings.nav_link_font_weight | plus: 0 %}
+  {% if w >= 700 %}{% assign hover_w = 900 %}
+  {% elsif w >= 600 %}{% assign hover_w = 700 %}
+  {% elsif w >= 500 %}{% assign hover_w = 600 %}
+  {% elsif w >= 400 %}{% assign hover_w = 500 %}
+  {% else %}{% assign hover_w = 400 %}{% endif %}
+
   .kimao-nav-text--bold {
     position: absolute;
     left: 0;
     top: 0;
-    font-weight: 600;
+    font-weight: {{ hover_w }};
     transform: translateY(-140%);
     opacity: 0;
   }
@@ -173,7 +191,7 @@
     }
   }
 
-  /* Right icons: align right */
+  /* Right icons: align right + bottom */
   .header__icons {
     justify-self: end;
   }
@@ -261,8 +279,8 @@
       <nav class="kimao-nav-left">
         <ul class="list-menu list-menu--inline">
           <li><a href="/collections/serum" class="kimao-nav-link"><span class="kimao-nav-text kimao-nav-text--normal">Serum</span><span class="kimao-nav-text kimao-nav-text--bold">Serum</span></a></li>
-          <li><a href="/collections/krem" class="kimao-nav-link"><span class="kimao-nav-text kimao-nav-text--normal">Krem</span><span class="kimao-nav-text kimao-nav-text--bold">Krem</span></a></li>
-          <li><a href="/collections/tonik" class="kimao-nav-link"><span class="kimao-nav-text kimao-nav-text--normal">Tonik</span><span class="kimao-nav-text kimao-nav-text--bold">Tonik</span></a></li>
+          <li><a href="/collections/cream" class="kimao-nav-link"><span class="kimao-nav-text kimao-nav-text--normal">Cream</span><span class="kimao-nav-text kimao-nav-text--bold">Cream</span></a></li>
+          <li><a href="/collections/toner" class="kimao-nav-link"><span class="kimao-nav-text kimao-nav-text--normal">Toner</span><span class="kimao-nav-text kimao-nav-text--bold">Toner</span></a></li>
           <li><a href="/collections/set-bundle" class="kimao-nav-link"><span class="kimao-nav-text kimao-nav-text--normal">Set/Bundle</span><span class="kimao-nav-text kimao-nav-text--bold">Set/Bundle</span></a></li>
         </ul>
       </nav>
@@ -371,16 +389,8 @@
           rel="nofollow"
         >
           <span class="icon-swap">
-            <svg class="icon-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="8" r="4"/>
-              <path d="M4 21c0-4.418 3.582-7 8-7s8 2.582 8 7H4z"/>
-            </svg>
-            <svg class="icon-filled" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
-                 stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="8" r="4"/>
-              <path d="M4 21c0-4.418 3.582-7 8-7s8 2.582 8 7H4z"/>
-            </svg>
+            <svg class="icon-outline" width="35" height="36" viewBox="0 0 35 36"><circle cx="17.642" cy="10.147" r="8.737" stroke="currentColor" stroke-width="2" fill="none"/><path fill-rule="evenodd" clip-rule="evenodd" d="M32.646 35.729q.03-.473.03-.952c0-8.228-6.67-14.898-14.897-14.898S2.88 26.55 2.88 34.777q0 .48.03.952H.908a17 17 0 0 1-.027-.952c0-9.332 7.566-16.898 16.898-16.898s16.897 7.566 16.897 16.898q0 .48-.026.952z" fill="currentColor"/><circle cx="17.5" cy="35" r="16" fill="none"/><path fill="currentColor" d="M2 34h32v2H2z"/></svg>
+            <svg class="icon-filled" width="35" height="36" viewBox="0 0 35 36"><circle cx="17.6423" cy="10.1467" r="8.73657" stroke="currentColor" stroke-width="2" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M32.6461 35.7288C32.6659 35.414 32.676 35.0965 32.676 34.7767C32.676 26.5491 26.0062 19.8794 17.7787 19.8794C9.55111 19.8794 2.88135 26.5491 2.88135 34.7767C2.88135 35.0965 2.89143 35.414 2.91128 35.7288H0.907722C0.890217 35.4137 0.881348 35.0962 0.881348 34.7767C0.881348 25.4446 8.44654 17.8794 17.7787 17.8794C27.1108 17.8794 34.676 25.4446 34.676 34.7767C34.676 35.0962 34.6671 35.4137 34.6496 35.7288H32.6461Z" fill="currentColor"/><circle cx="17.5" cy="35" r="16" fill="currentColor"/><rect x="2" y="34" height="2" width="32" fill="currentColor"/></svg>
           </span>
           <span class="visually-hidden">
             {%- liquid
@@ -623,6 +633,19 @@
       "id": "menu",
       "default": "main-menu",
       "label": "t:sections.header.settings.menu.label"
+    },
+    {
+      "type": "select",
+      "id": "nav_link_font_weight",
+      "label": "Nav link font weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Normal (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi Bold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "400"
     },
     {
       "type": "select",

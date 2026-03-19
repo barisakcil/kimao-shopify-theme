@@ -66,7 +66,7 @@
   }
 
   .infinite-slider-{{ section.id }} .inf-track.is-animating {
-    transition: transform 0.1s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: transform 0.35s cubic-bezier(0.16, 0.1, 0.12, 1);
   }
 
   /* Slide base */
@@ -90,6 +90,12 @@
     display: block;
     width: 100%;
     height: 100%;
+  }
+
+  .infinite-slider-{{ section.id }} .inf-slide--product .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    background: #F5F4F1;
   }
 
   .infinite-slider-{{ section.id }} .inf-slide--product img {
@@ -430,7 +436,7 @@
                   alt="{{ product.featured_image.alt | default: product.title | escape }}"
                   width="{{ product.featured_image.width }}"
                   height="{{ product.featured_image.height }}"
-                  loading="lazy"
+                  {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
                 >
               {%- else -%}
                 {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}

@@ -62,8 +62,8 @@
             </summary>
             <div class="kimao-drawer__sub">
               <a href="/collections/serum" class="kimao-drawer__sub-link">Serum</a>
-              <a href="/collections/krem" class="kimao-drawer__sub-link">Krem</a>
-              <a href="/collections/tonik" class="kimao-drawer__sub-link">Tonik</a>
+              <a href="/collections/cream" class="kimao-drawer__sub-link">Cream</a>
+              <a href="/collections/toner" class="kimao-drawer__sub-link">Toner</a>
               <a href="/collections/set-bundle" class="kimao-drawer__sub-link">Set / Bundle</a>
             </div>
           </details>
@@ -102,10 +102,32 @@
         {%- comment -%} BOTTOM BAR {%- endcomment -%}
         <div class="kimao-drawer__bottom">
           <a href="/account" class="kimao-drawer__bottom-item">Hesabım</a>
-          <a href="/cart" class="kimao-drawer__bottom-item">Sepet</a>
+          <a href="/cart" class="kimao-drawer__bottom-item">Sepet (<span data-drawer-cart-count>{{ cart.item_count }}</span>)</a>
         </div>
 
       </div>
     </div>
   </details>
 </header-drawer>
+
+<script>
+  (function(){
+    var orig = window.fetch;
+    window.fetch = function(){
+      var args = arguments;
+      var result = orig.apply(this, args);
+      if (typeof args[0] === 'string' && args[0].indexOf('/cart') !== -1) {
+        result.then(function(){
+          setTimeout(function(){
+            fetch('/cart.js').then(function(r){return r.json()}).then(function(c){
+              document.querySelectorAll('[data-drawer-cart-count]').forEach(function(el){
+                el.textContent = c.item_count;
+              });
+            });
+          }, 300);
+        });
+      }
+      return result;
+    };
+  })();
+</script>

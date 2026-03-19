@@ -50,36 +50,29 @@
   }
 
   .kimao-anim-{{ section.id }} .kimao-anim-char.reveal-bottom {
-    animation: kimaoWipeUp-{{ section.id }} {{ section.settings.anim_speed }}s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    animation: kimaoWipeUp-{{ section.id }} {{ section.settings.anim_speed }}s cubic-bezier(0.45, 0, 0.15, 1) infinite;
   }
 
   .kimao-anim-{{ section.id }} .kimao-anim-char.reveal-top {
-    animation: kimaoWipeDown-{{ section.id }} {{ section.settings.anim_speed }}s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    animation: kimaoWipeDown-{{ section.id }} {{ section.settings.anim_speed }}s cubic-bezier(0.45, 0, 0.15, 1) infinite;
   }
 
   @keyframes kimaoWipeUp-{{ section.id }} {
     0% {
       clip-path: inset(100% 0 -20% 0);
       transform: translateY(10px);
-      opacity: 1;
     }
-    85% {
+    45% {
       clip-path: inset(-20% 0 -20% 0);
       transform: translateY(0);
-      opacity: 1;
     }
-    95% {
+    55% {
       clip-path: inset(-20% 0 -20% 0);
       transform: translateY(0);
-      opacity: 1;
-    }
-    95.1% {
-      opacity: 0;
     }
     100% {
-      clip-path: inset(100% 0 -20% 0);
-      transform: translateY(10px);
-      opacity: 0;
+      clip-path: inset(-20% 0 100% 0);
+      transform: translateY(-10px);
     }
   }
 
@@ -87,29 +80,25 @@
     0% {
       clip-path: inset(-20% 0 100% 0);
       transform: translateY(-10px);
-      opacity: 1;
     }
-    85% {
+    45% {
       clip-path: inset(-20% 0 -20% 0);
       transform: translateY(0);
-      opacity: 1;
     }
-    95% {
+    55% {
       clip-path: inset(-20% 0 -20% 0);
       transform: translateY(0);
-      opacity: 1;
-    }
-    95.1% {
-      opacity: 0;
     }
     100% {
-      clip-path: inset(-20% 0 100% 0);
-      transform: translateY(-10px);
-      opacity: 0;
+      clip-path: inset(100% 0 -20% 0);
+      transform: translateY(10px);
     }
   }
 
   @media (max-width: 749px) {
+    .kimao-anim-{{ section.id }} {
+      height: {{ section.settings.section_height_mobile }}vh;
+    }
     .kimao-anim-{{ section.id }} .kimao-anim-word {
       font-size: {{ section.settings.font_size_mobile }}px;
       letter-spacing: -2px;
@@ -121,8 +110,6 @@
   }
 </style>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
 
 <div class="kimao-anim-{{ section.id }} color-{{ section.settings.color_scheme.id }}">
@@ -154,7 +141,17 @@
       "step": 5,
       "default": 100,
       "unit": "vh",
-      "label": "Section height"
+      "label": "Section height (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "section_height_mobile",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "default": 60,
+      "unit": "vh",
+      "label": "Section height (mobile)"
     },
     {
       "type": "image_picker",
@@ -194,10 +191,10 @@
     {
       "type": "range",
       "id": "anim_speed",
-      "min": 1,
-      "max": 6,
+      "min": 2,
+      "max": 12,
       "step": 1,
-      "default": 3,
+      "default": 8,
       "unit": "s",
       "label": "Animation speed"
     }

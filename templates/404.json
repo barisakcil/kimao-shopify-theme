@@ -14,135 +14,84 @@
       "disabled": true,
       "settings": {}
     },
-    "kimao_info_KXrBhQ": {
-      "type": "kimao-info",
+    "404_grid_CiiFyJ": {
+      "type": "404-grid",
+      "name": "404 Grid",
+      "settings": {
+        "top_small_text": "404",
+        "top_wide_text": "Sayfa bulunamadı",
+        "collection": "tum-urunler",
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "products_to_show": 11,
+        "drawer_color_scheme": "",
+        "drawer_atc_bg": "#000000",
+        "drawer_atc_color": "#ffffff",
+        "drawer_title_size": 15,
+        "drawer_title_weight": "600",
+        "drawer_title_letter_spacing": 3,
+        "drawer_title_transform": "none",
+        "drawer_category_size": 11,
+        "drawer_category_weight": "400",
+        "drawer_category_letter_spacing": 8,
+        "drawer_category_transform": "uppercase",
+        "drawer_atc_label_size": 13,
+        "drawer_atc_label_weight": "500",
+        "drawer_atc_label_letter_spacing": 4,
+        "drawer_atc_label_transform": "none",
+        "drawer_atc_price_size": 13,
+        "drawer_atc_price_weight": "600",
+        "drawer_link_size": 11,
+        "drawer_link_weight": "400",
+        "drawer_mob_title_size": 14,
+        "drawer_mob_title_weight": "600",
+        "drawer_mob_title_letter_spacing": 3,
+        "drawer_mob_title_transform": "uppercase",
+        "drawer_mob_category_size": 10,
+        "drawer_mob_category_weight": "400",
+        "drawer_mob_category_letter_spacing": 8,
+        "drawer_mob_category_transform": "uppercase",
+        "drawer_mob_price_size": 13,
+        "drawer_mob_price_weight": "600"
+      }
+    },
+    "newsletter_QAjQ6F": {
+      "type": "newsletter",
       "blocks": {
-        "info_box_hT7e4R": {
-          "type": "info_box",
+        "heading_TUH6Hg": {
+          "type": "heading",
           "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
+            "heading": "E-posta listemize kaydolun",
+            "heading_size": "h1"
           }
         },
-        "info_box_9U8nz3": {
-          "type": "info_box",
+        "paragraph_EKiPRW": {
+          "type": "paragraph",
           "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
+            "text": "<p>Yeni koleksiyonlar ve özel tekliflerden ilk siz haberdar olun.</p>"
           }
         },
-        "info_box_KXi3jY": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_LUwyW3": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_8qb7GX": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_hyE6nm": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_Lnmg7h": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_CmwNn7": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_GfVyMG": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_Wg8Pmb": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_TQ8wqD": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_VPfyUG": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Box 1</p>",
-            "answer": "<p>Answer 1</p>"
-          }
-        },
-        "info_box_XYbF3W": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Box 2</p>",
-            "answer": "<p>Answer 2</p>"
-          }
-        },
-        "info_box_LfCpMe": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Box 3</p>",
-            "answer": "<p>Answer 3</p>"
-          }
+        "email_form_ARHJJb": {
+          "type": "email_form",
+          "settings": {}
         }
       },
       "block_order": [
-        "info_box_hT7e4R",
-        "info_box_9U8nz3",
-        "info_box_KXi3jY",
-        "info_box_LUwyW3",
-        "info_box_8qb7GX",
-        "info_box_hyE6nm",
-        "info_box_Lnmg7h",
-        "info_box_CmwNn7",
-        "info_box_GfVyMG",
-        "info_box_Wg8Pmb",
-        "info_box_TQ8wqD",
-        "info_box_VPfyUG",
-        "info_box_XYbF3W",
-        "info_box_LfCpMe"
+        "heading_TUH6Hg",
+        "paragraph_EKiPRW",
+        "email_form_ARHJJb"
       ],
-      "name": "Kimao Info",
+      "name": "t:sections.newsletter.presets.name",
       "settings": {
-        "left_width": 50,
-        "box_bg_color": "#ffffff",
-        "answer_bg_color": "#ffffff",
-        "answer_text_color": "#000000"
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     }
   },
   "order": [
     "main",
-    "kimao_info_KXrBhQ"
+    "404_grid_CiiFyJ",
+    "newsletter_QAjQ6F"
   ]
 }

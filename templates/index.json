@@ -38,7 +38,6 @@
         "button"
       ],
       "settings": {
-        "image": "shopify://shop_images/banner.jpg",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
@@ -57,12 +56,42 @@
         "collection": "all",
         "products_to_show": 12,
         "side_text": "KIMAŌ ÖNERİYOR",
-        "wide_image": "shopify://shop_images/b774267ab6577acfc4233b5e6a138d2c616e8a1d-1524x1214.avif",
+        "show_wide_slide": true,
         "wide_text": "",
         "wide_slide_width": 600,
         "card_width": 400,
         "slider_height": 600,
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
         "card_color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "drawer_color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "drawer_atc_bg": "#000000",
+        "drawer_atc_color": "#ffffff",
+        "drawer_title_size": 15,
+        "drawer_title_weight": "600",
+        "drawer_title_letter_spacing": 3,
+        "drawer_title_transform": "none",
+        "drawer_category_size": 11,
+        "drawer_category_weight": "400",
+        "drawer_category_letter_spacing": 8,
+        "drawer_category_transform": "uppercase",
+        "drawer_atc_label_size": 13,
+        "drawer_atc_label_weight": "500",
+        "drawer_atc_label_letter_spacing": 4,
+        "drawer_atc_label_transform": "none",
+        "drawer_atc_price_size": 13,
+        "drawer_atc_price_weight": "600",
+        "drawer_link_size": 11,
+        "drawer_link_weight": "400",
+        "drawer_mob_title_size": 14,
+        "drawer_mob_title_weight": "600",
+        "drawer_mob_title_letter_spacing": 3,
+        "drawer_mob_title_transform": "uppercase",
+        "drawer_mob_category_size": 10,
+        "drawer_mob_category_weight": "400",
+        "drawer_mob_category_letter_spacing": 8,
+        "drawer_mob_category_transform": "uppercase",
+        "drawer_mob_price_size": 13,
+        "drawer_mob_price_weight": "600",
         "padding_top": 0,
         "padding_bottom": 0
       }
@@ -73,12 +102,42 @@
         "collection": "set-bundle",
         "products_to_show": 12,
         "side_text": "SET/BUNDLE",
-        "wide_image": "shopify://shop_images/Jerusalem_The_Emanation_of_The_Giant_Albion__object_37_detail.jpg",
+        "show_wide_slide": true,
         "wide_text": "",
         "wide_slide_width": 600,
         "card_width": 400,
         "slider_height": 600,
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
         "card_color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "drawer_color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "drawer_atc_bg": "#000000",
+        "drawer_atc_color": "#ffffff",
+        "drawer_title_size": 15,
+        "drawer_title_weight": "600",
+        "drawer_title_letter_spacing": 3,
+        "drawer_title_transform": "none",
+        "drawer_category_size": 11,
+        "drawer_category_weight": "400",
+        "drawer_category_letter_spacing": 8,
+        "drawer_category_transform": "uppercase",
+        "drawer_atc_label_size": 13,
+        "drawer_atc_label_weight": "500",
+        "drawer_atc_label_letter_spacing": 4,
+        "drawer_atc_label_transform": "none",
+        "drawer_atc_price_size": 13,
+        "drawer_atc_price_weight": "600",
+        "drawer_link_size": 11,
+        "drawer_link_weight": "400",
+        "drawer_mob_title_size": 14,
+        "drawer_mob_title_weight": "600",
+        "drawer_mob_title_letter_spacing": 3,
+        "drawer_mob_title_transform": "uppercase",
+        "drawer_mob_category_size": 10,
+        "drawer_mob_category_weight": "400",
+        "drawer_mob_category_letter_spacing": 8,
+        "drawer_mob_category_transform": "uppercase",
+        "drawer_mob_price_size": 13,
+        "drawer_mob_price_weight": "600",
         "padding_top": 0,
         "padding_bottom": 0
       }
@@ -87,12 +146,47 @@
       "type": "kimao-girl-animation",
       "name": "Kimao Girl Animation",
       "settings": {
-        "section_height": 80,
-        "bg_image": "shopify://shop_images/hf_20260213_152842_c76f87cf-90c5-4aa5-95d0-8557be531457_1.png",
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "section_height": 40,
+        "section_height_mobile": 20,
         "overlay_opacity": 0,
         "font_size": 150,
         "font_size_mobile": 60,
         "anim_speed": 3
+      }
+    },
+    "newsletter_i4pAaM": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_ULVn3e": {
+          "type": "heading",
+          "settings": {
+            "heading": "E-posta listemize kaydolun",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph_MT9d9p": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Yeni koleksiyonlar ve özel tekliflerden ilk siz haberdar olun.</p>"
+          }
+        },
+        "email_form_HBx8KU": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_ULVn3e",
+        "paragraph_MT9d9p",
+        "email_form_HBx8KU"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     }
   },
@@ -100,6 +194,7 @@
     "image_banner",
     "infinite_slider",
     "infinite_collection_slider_HX7TRg",
-    "kimao_girl_animation_ktjNxN"
+    "kimao_girl_animation_ktjNxN",
+    "newsletter_i4pAaM"
   ]
 }

@@ -2094,14 +2094,32 @@ input[type='checkbox'] {
   line-height: calc(1 + 0.1 / var(--font-body-scale));
 }
 
-/* Kimao: hide old cart-count-bubble (replaced by SVG text counter) */
+/* Kimao: hide old cart-count-bubble (replaced by text counter) */
 .header__icon--cart .cart-count-bubble {
   display: none;
 }
 
+/* Kimao: cart item count inside bag icon */
+.cart-count-text {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  color: rgb(var(--color-foreground));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.header__icon--cart:hover .cart-count-text {
+  color: rgb(var(--color-background));
+}
+
 /* Kimao: icon spacing */
 .header__icons {
-  gap: calc(1.5rem - 1px);
+  gap: 3px;
 }
 .header__icons .header__icon {
   padding: 0;
@@ -2126,14 +2144,14 @@ input[type='checkbox'] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
 }
 
 .icon-swap .icon-outline,
 .icon-swap .icon-filled {
-  width: 44px;
-  height: 44px;
+  width: auto;
+  height: 36px;
   position: absolute;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.55s ease;
 }
@@ -2156,6 +2174,16 @@ input[type='checkbox'] {
 .header__icon:hover .icon-swap .icon-filled {
   transform: translateY(0);
   opacity: 1;
+}
+
+/* Cart icon: slightly larger */
+.header__icon--cart .icon-swap {
+  width: 29px;
+  height: 38px;
+}
+.header__icon--cart .icon-swap .icon-outline,
+.header__icon--cart .icon-swap .icon-filled {
+  height: 38px;
 }
 
 /* Filled bag counter: use theme background color */

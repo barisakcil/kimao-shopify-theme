@@ -14,25 +14,90 @@
       "name": "Collection Grid",
       "settings": {
         "collection": "serum",
-        "grid_image": "shopify://shop_images/3090d1193b19600e810cff4d26b73303.webp",
         "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
-        "products_to_show": 5
+        "products_to_show": 5,
+        "drawer_color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "drawer_atc_bg": "#000000",
+        "drawer_atc_color": "#ffffff",
+        "drawer_title_size": 15,
+        "drawer_title_weight": "600",
+        "drawer_title_letter_spacing": 3,
+        "drawer_title_transform": "none",
+        "drawer_category_size": 11,
+        "drawer_category_weight": "400",
+        "drawer_category_letter_spacing": 8,
+        "drawer_category_transform": "uppercase",
+        "drawer_atc_label_size": 13,
+        "drawer_atc_label_weight": "500",
+        "drawer_atc_label_letter_spacing": 4,
+        "drawer_atc_label_transform": "none",
+        "drawer_atc_price_size": 13,
+        "drawer_atc_price_weight": "600",
+        "drawer_link_size": 11,
+        "drawer_link_weight": "400",
+        "drawer_mob_title_size": 14,
+        "drawer_mob_title_weight": "600",
+        "drawer_mob_title_letter_spacing": 3,
+        "drawer_mob_title_transform": "uppercase",
+        "drawer_mob_category_size": 10,
+        "drawer_mob_category_weight": "400",
+        "drawer_mob_category_letter_spacing": 8,
+        "drawer_mob_category_transform": "uppercase",
+        "drawer_mob_price_size": 13,
+        "drawer_mob_price_weight": "600"
       }
     },
     "kimao_girl_animation_9hdyfC": {
       "type": "kimao-girl-animation",
       "name": "Kimao Girl Animation",
       "settings": {
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
         "section_height": 40,
+        "section_height_mobile": 20,
         "overlay_opacity": 0,
         "font_size": 150,
         "font_size_mobile": 60,
         "anim_speed": 3
       }
+    },
+    "newsletter_74QfM7": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_y7UJTE": {
+          "type": "heading",
+          "settings": {
+            "heading": "E-posta listemize kaydolun",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph_y66PQh": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Yeni koleksiyonlar ve özel tekliflerden ilk siz haberdar olun.</p>"
+          }
+        },
+        "email_form_pxWLrf": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_y7UJTE",
+        "paragraph_y66PQh",
+        "email_form_pxWLrf"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "collection_grid_8ynk6L",
-    "kimao_girl_animation_9hdyfC"
+    "kimao_girl_animation_9hdyfC",
+    "newsletter_74QfM7"
   ]
 }

@@ -20,109 +20,18 @@
     "kimao_info_3g9enz": {
       "type": "kimao-info",
       "blocks": {
-        "info_box_PAcW6T": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_NEXxK6": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title1</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_VbzH7H": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p><em><strong>Title2</strong></em></p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_iLxXNd": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p><em><strong>Title3213</strong></em></p>",
-            "answer": "<p><strong>ast Update: April 2025</strong></p><p></p><p><strong>Shipping Options:</strong></p><ul><li>We utilize two reliable carriers for our shipping needs. Larger orders: ex: candle, 50 mL, 100 mL, Pocket Perfume and  body line are shipped via UPS, while smaller packages such as: Customizable Sample Set, samples and Auto Fragrances are dispatched through USPS.</li><li>Please note if your order is a larger order we do not ship thru PO BOX address.</li><li>For UPS shipments, delivery times may vary depending on your location and the UPS service selected. Please note that there may be delays due to the weather and holiday season.</li></ul><p><strong>International Shipping:</strong></p><p>At this time, we ship to the United States, United Kingdom, and Canada.</p><p><strong>Calculating Shipping Costs:</strong></p><p>Please be aware that our free shipping offer does not apply to orders shipped to Canada or Hawaii. Shipping costs for these locations will be calculated at checkout based on the address you provide.</p><p><strong>In-Store Pickup:</strong></p><p>Please note that online orders cannot be picked up at any physical locations. We exclusively provide shipping services for all online orders.</p><p><strong>Modifying Your Shipping Address</strong></p><ul><li>If you need to update your shipping address, please contact us within 24 hours of placing your order. We will do our best to accommodate your request.</li></ul><p><strong>Delivery:</strong></p><p>Orders are shipped from our facility in New Jersey. For shipments within the United States, UPS typically delivers within 2-5 business days, while USPS delivery usually takes 5-7 business days. Please note that USPS shipments can sometimes experience delays.</p><p>Shipping to Canada and the United Kingdom can take up to 2-3 weeks, depending on customs processing and transit times.</p><p><strong>Scanning Delays with USPS:</strong></p><ul><li>Please be aware that USPS may experience scanning delays during the shipping process. While we aim to provide timely and accurate tracking information, these delays may affect the visibility of tracking updates.</li></ul><p><strong>Delivery Confirmation with UPS:</strong></p><ul><li>UPS now includes an image as a method to confirm successful delivery. As part of this confirmation process, we reserve the right to exercise discretion regarding refunds or replacements in cases of confirmed deliveries.</li></ul><p><strong>Calculating Shipping Costs:</strong></p><ul><li>Please be aware that our free shipping offer does not apply to orders shipped to Canada or Hawaii. Shipping costs for these locations will be calculated at checkout based on the address you provide.</li></ul><p><strong>Lost or Stolen Packages:</strong></p><ul><li>D.S. & Durga is not responsible for any lost or stolen packages. However, if a package is lost in transit by the carrier, we will make every effort to assist you in locating it. Please reach out to us, and we will work together with the carrier to resolve the issue.</li></ul><p><strong>Missing Packages</strong></p><p>If the tracking information for your package confirms delivery and you cannot locate the delivered package, please follow the steps below.</p><p>1. Check with neighbors and family members</p><p>2. Look around the delivery location</p><p>3. Check for notice of attempted delivery</p><p>4. Contact the carrier directly who can assist further</p><p>D.S. & Durga monitors claims of lost, missing, wrong and damaged items for abuse. Lost, missing, wrong and damaged items must be reported immediately upon receipt of the shipment, and any damaged, wrong, missing items must be retained (including the shipper). D.S. & Durga reserves the right to limit or deny the reshipment or credit of an order/item in all instances.</p><p><strong>Please note that there are certain days when your package may not ship.</strong></p><p>All orders ship Monday - Friday. We do not ship orders on the following holidays: New Year's Day & the day after</p><ul><li>Martin Luther King Jr. Day</li><li>President's Day</li><li>Memorial Day</li><li>Juneteenth</li><li>4th of July</li><li>Labor Day</li><li>Indigenous Peoples' Day</li><li>Thanksgiving Day & the day after Thanksgiving</li><li>Christmas Day & the day after Christmas</li></ul>"
-          }
-        },
-        "info_box_inwiBh": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_3EiiyE": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_x4TGGr": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_UxjJaf": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_YhVyqN": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_Ea6jdJ": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_qA7QrF": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_ULMNGk": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
-        "info_box_EJ3yRx": {
-          "type": "info_box",
-          "settings": {
-            "heading": "<p>Title</p>",
-            "answer": "<p>Answer text here</p>"
-          }
-        },
         "info_box_H8JQKF": {
           "type": "info_box",
           "settings": {
-            "heading": "<p>Box 1</p>",
-            "answer": "<p>Answer 1</p>"
+            "heading": "<p>S: Rice Milky Toner her gün kullanılabilir mi?</p>",
+            "answer": "<p><strong>C: Evet, formülü günlük kullanıma uygundur ve sabah akşam kullanılabilir.</strong></p>"
           }
         },
         "info_box_B8d69n": {
           "type": "info_box",
           "settings": {
-            "heading": "<p>Box 2</p>",
-            "answer": "<p>Answer 2</p>"
+            "heading": "<p>S: Bu tonik cildi aydınlatır mı?</p>",
+            "answer": "<p><strong>C: İçeriğinde bulunan Pirinç Özü ve Niacinamide sayesinde cildin daha aydınlık görünmesine yardımcı olur.</strong></p>"
           }
         },
         "info_box_RpYQkV": {
@@ -134,35 +43,62 @@
         }
       },
       "block_order": [
-        "info_box_PAcW6T",
-        "info_box_NEXxK6",
-        "info_box_VbzH7H",
-        "info_box_iLxXNd",
-        "info_box_inwiBh",
-        "info_box_3EiiyE",
-        "info_box_x4TGGr",
-        "info_box_UxjJaf",
-        "info_box_YhVyqN",
-        "info_box_Ea6jdJ",
-        "info_box_qA7QrF",
-        "info_box_ULMNGk",
-        "info_box_EJ3yRx",
         "info_box_H8JQKF",
         "info_box_B8d69n",
         "info_box_RpYQkV"
       ],
       "name": "Kimao Info",
       "settings": {
-        "image": "shopify://shop_images/3090d1193b19600e810cff4d26b73303.webp",
         "left_width": 60,
-        "box_bg_color": "#ffffff",
-        "answer_bg_color": "#ffffff",
+        "box_bg_color": "#f5f4f1",
+        "box_text_color": "#000000",
+        "box_active_text_color": "#f5f4f1",
+        "box_font_size": 20,
+        "box_font_weight": 400,
+        "answer_font_size": 16,
+        "answer_font_weight": 400,
+        "answer_bg_color": "#f5f4f1",
         "answer_text_color": "#000000"
+      }
+    },
+    "newsletter_AU6RVk": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_kU3AxY": {
+          "type": "heading",
+          "settings": {
+            "heading": "E-posta listemize kaydolun",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph_e4NKRY": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Yeni koleksiyonlar ve özel tekliflerden ilk siz haberdar olun.</p>"
+          }
+        },
+        "email_form_TnfAgx": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_kU3AxY",
+        "paragraph_e4NKRY",
+        "email_form_TnfAgx"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     }
   },
   "order": [
     "main",
-    "kimao_info_3g9enz"
+    "kimao_info_3g9enz",
+    "newsletter_AU6RVk"
   ]
 }

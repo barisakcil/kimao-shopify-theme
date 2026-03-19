@@ -1,74 +1,172 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "kimao-product-detail-top": {
       "type": "kimao-product-detail-top",
       "blocks": {
-        "block-ph": {
-          "type": "info_block",
+        "accordion_item_ixtFQG": {
+          "type": "accordion_item",
           "settings": {
-            "title": "pH Değeri",
-            "description": "",
-            "title_size": 12,
-            "title_weight": "600",
-            "desc_size": 13,
-            "desc_weight": "400"
+            "title": "Ne İşe Yarar?",
+            "content": "<p>{{ product.metafields.custom.ne_i_se_yarar | metafield_tag }}</p>"
           }
         },
-        "block-skin": {
+        "accordion_item_FbXyKf": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Ana İçerikler ve Etkileri",
+            "content": "<p>{{ product.metafields.custom.ana_i_cerik_ve_etkileri | metafield_tag }}</p>"
+          }
+        },
+        "accordion_item_M4MmbW": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Hedeflenen Cilt Sorunları",
+            "content": "<p>{{ product.metafields.custom.hedeflenen_cilt_sorunlari | metafield_tag }}</p>"
+          }
+        },
+        "accordion_item_zRdXBW": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Kimler İçin Uygun?",
+            "content": "<p>{{ product.metafields.custom.kimler_i_cin_uygun | metafield_tag }}</p>"
+          }
+        },
+        "accordion_item_r6Ad8J": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Kullanım Şekli",
+            "content": "<p>{{ product.metafields.custom.kullanim_sekli | metafield_tag }}</p>"
+          }
+        },
+        "info_block_8Qxmnd": {
           "type": "info_block",
           "settings": {
             "title": "Cilt Tipi",
-            "description": "",
-            "title_size": 12,
+            "description": "<p>{{ product.metafields.custom.cilt_tipi | metafield_tag }}</p>",
+            "title_color": "#000000",
+            "title_size": 15,
             "title_weight": "600",
-            "desc_size": 13,
-            "desc_weight": "400"
+            "title_letter_spacing": 0,
+            "title_line_height": 13,
+            "title_transform": "none",
+            "desc_color": "#555555",
+            "desc_size": 14,
+            "desc_weight": "400",
+            "desc_letter_spacing": 0,
+            "desc_line_height": 15,
+            "desc_transform": "none"
           }
         },
-        "block-volume": {
+        "info_block_Pg4aWj": {
           "type": "info_block",
           "settings": {
-            "title": "Hacim",
-            "description": "",
-            "title_size": 12,
+            "title": "Sorunlar",
+            "description": "<p>{{ product.metafields.custom.sorunlar | metafield_tag }}</p>",
+            "title_color": "#000000",
+            "title_size": 15,
             "title_weight": "600",
-            "desc_size": 13,
-            "desc_weight": "400"
+            "title_letter_spacing": 0,
+            "title_line_height": 13,
+            "title_transform": "none",
+            "desc_color": "#555555",
+            "desc_size": 14,
+            "desc_weight": "400",
+            "desc_letter_spacing": 0,
+            "desc_line_height": 15,
+            "desc_transform": "none"
           }
         },
-        "block-texture": {
+        "info_block_cDnxx3": {
           "type": "info_block",
           "settings": {
-            "title": "Doku",
-            "description": "",
-            "title_size": 12,
+            "title": "Aktifler",
+            "description": "<p>{{ product.metafields.custom.aktifler | metafield_tag }}</p>",
+            "title_color": "#000000",
+            "title_size": 15,
             "title_weight": "600",
-            "desc_size": 13,
-            "desc_weight": "400"
+            "title_letter_spacing": 0,
+            "title_line_height": 13,
+            "title_transform": "none",
+            "desc_color": "#555555",
+            "desc_size": 14,
+            "desc_weight": "400",
+            "desc_letter_spacing": 0,
+            "desc_line_height": 15,
+            "desc_transform": "none"
           }
         }
       },
       "block_order": [
-        "block-ph",
-        "block-skin",
-        "block-volume",
-        "block-texture"
+        "accordion_item_ixtFQG",
+        "accordion_item_FbXyKf",
+        "accordion_item_M4MmbW",
+        "accordion_item_zRdXBW",
+        "accordion_item_r6Ad8J",
+        "info_block_8Qxmnd",
+        "info_block_Pg4aWj",
+        "info_block_cDnxx3"
       ],
       "settings": {
-        "left_width": 4,
-        "middle_width": 3,
+        "bg_color": "#f5f4f1",
+        "left_width": 10,
+        "middle_width": 8,
         "right_width": 3,
-        "padding": 24,
-        "category_size": 11,
-        "category_weight": "500",
-        "title_size": 28,
+        "padding": 32,
+        "category_color": "#888888",
+        "category_size": 13,
+        "category_weight": "600",
+        "category_letter_spacing": 8,
+        "category_line_height": 14,
+        "category_transform": "uppercase",
+        "title_color": "#000000",
+        "title_size": 32,
         "title_weight": "600",
+        "title_letter_spacing": 0,
+        "title_line_height": 12,
+        "title_transform": "uppercase",
+        "atc_padding_y": 16,
+        "atc_padding_x": 20,
+        "atc_radius": 5,
+        "atc_bg_color": "#000000",
+        "atc_label_color": "#ffffff",
+        "atc_label_size": 20,
+        "atc_label_weight": "500",
+        "atc_label_letter_spacing": 4,
+        "atc_label_transform": "none",
+        "atc_price_color": "#ffffff",
+        "atc_price_size": 19,
+        "atc_price_weight": "600",
+        "atc_price_letter_spacing": 4,
+        "desc_color": "#000000",
         "desc_size": 14,
-        "desc_weight": "400"
+        "desc_weight": "500",
+        "desc_letter_spacing": 0,
+        "desc_line_height": 17,
+        "desc_transform": "none",
+        "accordion_padding": 16,
+        "accordion_title_size": 13,
+        "accordion_title_weight": "600",
+        "accordion_title_letter_spacing": 0,
+        "accordion_title_transform": "none",
+        "accordion_content_color": "#555555",
+        "accordion_content_size": 13,
+        "accordion_content_weight": "400",
+        "accordion_content_letter_spacing": 0,
+        "accordion_content_line_height": 16
       }
     },
     "related-products": {
       "type": "related-products",
+      "disabled": true,
       "settings": {
         "heading": "Bunları da beğenebilirsin",
         "heading_size": "h2",
@@ -84,10 +182,150 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "kimao_product_detail_bot_6GyYUf": {
+      "type": "kimao-product-detail-bot",
+      "name": "Kimao Product Detail Bot",
+      "settings": {
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "split_left": 50,
+        "image": "shopify://shop_images/Gemini_Generated_Image_y6h1rny6h1rny6h1.png",
+        "title": "",
+        "body": "<p> “Atölyede gün bitmek üzereydi. Pencereden giren loş ışık tuvalin üzerindeki kusurları daha da görünür kıldı; fazla renk, aceleyle atılmış birkaç çizgi, küçük hatalar. Bir süre baktım. Sonra fırçayı bırakıp yumuşak bir bez aldım. Yüzeyi yavaşça silmeye başladım. Boyalar dağıldı, sert çizgiler yumuşadı, renkler birbirine karışmadan kendi yerini buldu. Tuval bir anda sakinleşti. O an anladım; Bazı yüzeyler, yeni renkler istemez. Sadece yeniden nefes almak ister.”</p><p><em>-KIMAŌ</em></p><h2><strong>FAQ – Sıkça Sorulan Sorular</strong></h2><p><strong>S: KIMAŌ Azelaik Asit Serumu hangi cilt tipleri için uygundur?<br/> C: Tüm cilt tipleri için uygundur; özellikle akneye eğilimli, yağlı ve hassas ciltler için idealdir.</strong></p><p><strong>S: Hamile veya emziren kişiler kullanabilir mi?<br/> C: Evet, serumun nazik ve güvenli formülü sayesinde hamile ve emziren kişiler de kullanabilir.</strong></p><p><strong>S: Günlük olarak kullanılabilir mi?<br/> C: Sabah ve akşam düzenli kullanım uygundur. Gündüz kullanımda mutlaka güneş kremi ile desteklenmelidir.</strong></p><p><strong>S: Akne ve komedon sorunlarına gerçekten yardımcı olur mu?<br/> C: Evet, </strong><em><strong>%5 Azelaik Asit</strong></em><strong> ve ek aktif bileşenler sayesinde mevcut akneleri yatıştırır, yeni akne ve komedon oluşumunu engellemeye yardımcı olur.</strong></p><p><strong>S: Serum diğer KIMAŌ ürünleri ile kullanılabilir mi? </strong></p><p><strong>C: Evet, diğer serum ve kremler ile kombine kullanım cilt bakım rutininizin etkinliğini artırır.</strong></p>",
+        "title_size": 36,
+        "body_size": 15,
+        "padding_x": 64,
+        "padding_y": 44,
+        "mobile_image_height": 300,
+        "mobile_padding_x": 20,
+        "mobile_padding_y": 24
+      }
+    },
+    "kimao_formulasyon_kRzAzz": {
+      "type": "kimao-formulasyon",
+      "name": "Kimao Formulasyon",
+      "settings": {
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "svg_font_size": 120,
+        "text_font_size": 13,
+        "mobile_text_font_size": 12,
+        "padding_top": 0,
+        "padding_bottom": 64,
+        "text_padding_top": 0,
+        "text_padding_bottom": 36,
+        "text_padding_x": 64,
+        "mobile_padding_top": 24,
+        "mobile_padding_bottom": 24,
+        "mobile_gap": 16
+      }
+    },
+    "kimao_product_more_9wiPkG": {
+      "type": "kimao-product-more",
+      "name": "Product More",
+      "settings": {
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "image": "shopify://shop_images/dahasi_yazi_paths_a9c15e56-7375-4e43-810b-b4a2904fc955.svg",
+        "border_color": "#000000",
+        "loading": "lazy",
+        "height_vw": 16.5,
+        "crop_top": 0.6,
+        "crop_left": 1.6,
+        "crop_right": 1.6,
+        "mobile_height_vw": 17,
+        "mobile_crop_top": 0.8,
+        "mobile_crop_left": 1.6,
+        "mobile_crop_right": 1.6
+      }
+    },
+    "infinite_collection_slider_czwK6c": {
+      "type": "infinite-collection-slider",
+      "name": "Infinite Collection Slider",
+      "settings": {
+        "collection": "tum-urunler",
+        "products_to_show": 12,
+        "side_text": "DAHASI",
+        "show_wide_slide": false,
+        "wide_text": "New Collection",
+        "wide_slide_width": 440,
+        "card_width": 300,
+        "slider_height": 400,
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "card_color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "drawer_color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "drawer_atc_bg": "#000000",
+        "drawer_atc_color": "#ffffff",
+        "drawer_title_size": 15,
+        "drawer_title_weight": "600",
+        "drawer_title_letter_spacing": 3,
+        "drawer_title_transform": "none",
+        "drawer_category_size": 11,
+        "drawer_category_weight": "400",
+        "drawer_category_letter_spacing": 8,
+        "drawer_category_transform": "uppercase",
+        "drawer_atc_label_size": 13,
+        "drawer_atc_label_weight": "500",
+        "drawer_atc_label_letter_spacing": 4,
+        "drawer_atc_label_transform": "none",
+        "drawer_atc_price_size": 13,
+        "drawer_atc_price_weight": "600",
+        "drawer_link_size": 11,
+        "drawer_link_weight": "400",
+        "drawer_mob_title_size": 14,
+        "drawer_mob_title_weight": "600",
+        "drawer_mob_title_letter_spacing": 3,
+        "drawer_mob_title_transform": "uppercase",
+        "drawer_mob_category_size": 10,
+        "drawer_mob_category_weight": "400",
+        "drawer_mob_category_letter_spacing": 8,
+        "drawer_mob_category_transform": "uppercase",
+        "drawer_mob_price_size": 13,
+        "drawer_mob_price_weight": "600",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "newsletter_d6yKJ3": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_BUHgC8": {
+          "type": "heading",
+          "settings": {
+            "heading": "E-posta listemize kaydolun",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph_crXqYd": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Yeni koleksiyonlar ve özel tekliflerden ilk siz haberdar olun.</p>"
+          }
+        },
+        "email_form_NiYQhX": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_BUHgC8",
+        "paragraph_crXqYd",
+        "email_form_NiYQhX"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "color_scheme": "scheme-21412617-a212-4688-81de-fb518c7573db",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "kimao-product-detail-top",
-    "related-products"
+    "related-products",
+    "kimao_product_detail_bot_6GyYUf",
+    "kimao_formulasyon_kRzAzz",
+    "kimao_product_more_9wiPkG",
+    "infinite_collection_slider_czwK6c",
+    "newsletter_d6yKJ3"
   ]
 }
